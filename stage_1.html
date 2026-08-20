@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+
+<title>MyRevo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="icon.png">
+<link rel="stylesheet" title="Default" href="default.css">
+
+<style>
+
+    .circle {
+        cursor: pointer;
+        transition: 0.2s ease;
+    }
+
+    .circle:hover {
+        background: #6b3dcc;
+    }
+
+    #position1 {
+        position: absolute;
+        top: 2rem;
+        left: 3rem;
+    }
+
+    #position2 {
+        position: absolute;
+        top: 4.5rem;
+        left: 7rem;
+        color: #8a64e2;
+    }
+
+    #position3 {
+        font-size: 1.3rem;
+        position: absolute;
+        top: 3.6rem;
+        left: 31rem;
+    }
+
+    #position4 {
+        font-size: 1.3rem;
+        position: absolute;
+        top: 5.1rem;
+        left: 31.7rem;
+    }
+
+    #position5 {
+        font-size: 1.3rem;
+        position: absolute;
+        top: 6.6rem;
+        left: 39.8rem;
+    }
+
+    #position6 {
+        font-size: 1.2rem;
+        position: absolute;
+        top: 27.4rem;
+        left: 18.3rem;
+        color: #8a64e2;
+    }
+
+    #position7 {
+        font-size: 1.2rem;
+        position: absolute;
+        top: 28.8rem;
+        left: 18.3rem;
+    }
+
+    #position8 {
+        font-size: 1.2rem;
+        position: absolute;
+        top: 30.1rem;
+        left: 29.8rem;
+    }
+
+    .lines {
+        position: absolute;
+        width: 3rem;
+        height: 3.3rem;
+        top: 2.7rem;
+        left: 0.1rem;
+    }
+
+    #question1 {
+        font-size: 1.6rem;
+        position: absolute;
+        top: 10rem;
+        left: 16rem;
+    }
+
+    .question1-icon {
+        position: absolute;
+        height: 4rem;
+        top: 10rem;
+        left: 12rem;
+    }
+
+    .age-options {
+        position: absolute;
+        top: 13.2rem;
+        left: 13rem;
+        display: flex;
+        gap: 1.2rem;
+    }
+
+    .age-btn {
+        width: 6rem;
+        height: 3rem;
+        border: 0.3rem solid #000000;
+        border-radius: 1rem;
+        font-size: 1.6rem;
+        font-weight: 600;
+        background: #FFFFFF;
+        cursor: pointer;
+    }
+    
+    .age-btn:hover, .age-btn.selected {
+        background: #8a64e2;
+        border-color: #000000;
+        color: #FFFFFF;
+    }
+
+    .divider {
+        position: absolute;
+        top: 18rem;
+        left: 13rem;
+        width: 47rem;
+        border-top: 0.3rem dashed #000000;
+    }
+
+    #question2 {
+        font-size: 1.6rem;
+        position: absolute;
+        top: 19.4rem;
+        left: 16.5rem;
+    }
+
+    .question2-icon {
+        position: absolute;
+        height: 4.5rem;
+        top: 19.4rem;
+        left: 12rem;
+    }
+
+    .dropdown-wrapper {
+        position: relative;
+        top: 6rem;
+        left: 13rem;
+    }
+
+    .dropdown {
+        width: 36rem;
+        padding: 0.6rem;
+        border: 0.3rem solid #8a64e2;
+        border-radius: 1rem;
+        font-size: 1.3rem;
+        cursor: pointer;
+    }
+
+    .dropdown:focus {
+        outline: none;
+        border-color: #8a64e2;
+        box-shadow: 0 0 0 0.2rem #8a64e266; 
+    }
+
+    .info {
+        position: absolute;
+        left: 15.8rem;
+        bottom: -0.1rem;
+        width: 30rem;
+        height: 5rem;
+        border: 0.2rem solid #e2e2e2;
+        border-radius: 1rem;
+        background: #FFFFFF;
+    }
+
+    .info-icon {
+        position: absolute;
+        height: 2.4rem;
+        top: 28rem;
+        left: 16rem;
+    }
+
+    .next-icon {
+        width: 3rem;
+        height: 3rem;
+    }
+
+    .error-msg {
+        display: none;
+        position: absolute;
+        padding: 1rem;;
+        bottom: -0.5rem;
+        width: 18rem;
+        left: 34em;
+        background: #FFFFFF;
+        color: #FF0000;
+        font-size: 1.4rem;
+        font-family: Azurite, sans-serif;
+        border: 0.3rem solid #FF0000;
+        border-radius: 1rem;
+    }
+
+</style>
+
+
+<main class="whiteboard-frame1">
+
+    <img class= "page-icon" src="page_icon.png" alt="MyRevo Icon">
+
+    <section class="whiteboard-frame2">
+        <p class="stages"><strong><span style="color: #8a64e2;">Stage 1</span></strong>of 4</p>
+        
+        <section class="dots">
+            <p class="stage-dot active"></p>
+            <p class="stage-dot"></p>
+            <p class="stage-dot"></p>
+            <p class="stage-dot"></p>
+        </section>
+
+        <p class="info"></p>
+        <img class= "info-icon" src="info_icon.png" alt="Info Icon">
+        <h3 class="font2" id="position6">A quick note</h3>
+        <h3 class="font2" id="position7">It is ideally best to start this timetable 5-8 weeks before your first</h3>
+        <h3 class="font2" id="position8">exam.</h3>
+        
+        <h1 class="font1" id="position1">Let's build your perfect</h1>
+        <h1 class="font1" id="position2">revision plan</h1>
+        <svg style="margin-left: 7rem" width="215" height="280" viewBox="0 0 160 10" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,5 Q20,0 40,5 Q60,10 80,5 Q100,0 120,5 Q140,10 160,5" 
+                fill="none" stroke="#8a64e2" stroke-width="4"/>
+        </svg>
+        
+        <img class= "lines" src="purple_lines.png" alt="Purple Lines">
+        <h2 class="font2" id="position3">Answer a few simple questions and we'll create a</h2>
+        <h2 class="font2" id="position4">personalised timetable to help you reach your</h2>
+        <h2 class="font2" id="position5">goals.</h2>
+        
+        <img class="question1-icon" src="question1_icon.png" alt="Age Icon">
+        <h3 class="font2" id="question1">How old are you?</h3>
+        <p class="age-options">
+            <button type="button" class="age-btn font2" onclick="selectAge(this)">14</button>
+            <button type="button" class="age-btn font2" onclick="selectAge(this)">15</button>
+            <button type="button" class="age-btn font2" onclick="selectAge(this)">16</button>
+            <button type="button" class="age-btn font2" onclick="selectAge(this)">17</button>
+            <button type="button" class="age-btn font2" onclick="selectAge(this)">18+</button>
+        </p>
+
+        <p class="divider"></p>
+
+        <img class="question2-icon" src="question2_icon.png" alt="Graduation Icon">
+        <h3 class="font2" id="question2">What qualification are you studying?</h3>
+        <section class="dropdown-wrapper">
+            <select class="dropdown font2">
+                <option value="" disabled selected>Select qualification</option>
+                <option>GCSE Year 10</option>
+                <option>GCSE Year 11</option>
+                <option>A Level/ AS Level/ BTEC (Year 12)</option>
+                <option>A Level/ BTEC (Year 13)</option>
+                <option>T Level (Year 1)</option>
+                <option>T Level (Year 2)</option>
+                <option>University (Level 4)</option>
+                <option>University (Level 5)</option>
+                <option>University (Level 6)</option>
+                <option>University (Master's Degree)</option>
+            </select>
+        </section>
+        
+        <h3 class="error-msg font2"></h3>
+
+        <p class="rubber"></p>
+    </section>
+
+    <p class="whiteboard-top"></p>
+    <p class="line"></p>
+    <button type="button" class="circle" onclick="nextPage()">Next<img class="next-icon" src="next_icon.png" alt="Next Icon"></button>
+
+</main>
+
+<script src="device-check.js"></script>
+<script>
+
+    function selectAge(btn) {
+        document.querySelectorAll('.age-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+    }
+
+    function nextPage() {
+        const ageSelected = document.querySelector('.age-btn.selected');
+        const errorMessage = document.querySelector('.error-msg');
+        const qualification = document.querySelector('.dropdown').value;
+        
+        if (!ageSelected || qualification == '') {
+            errorMessage.style.display = 'block';
+            errorMessage.textContent = 'Error: You cannot leave any blank.';
+            return;
+        }
+
+        const age = ageSelected.textContent === '18+' ? 18 : parseInt(ageSelected.textContent);
+
+        if (age > 15 && qualification == "GCSE Year 10") {
+            errorMessage.style.display = 'block';
+            errorMessage.textContent = 'Error: Your age cannot exceed 15 for this qualification.';
+            return;
+        }
+
+        if (age == 14 && qualification == "GCSE Year 11") {
+            errorMessage.style.display = 'block';
+            errorMessage.textContent = 'Error: Your age cannot be below 15 for this qualification.';
+            return;
+        }
+
+        if (qualification == "A Level/ AS Level/ BTEC (Year 12)" || qualification == "T Level (Year 1)") {
+            if (age < 16 || age > 17) {
+                errorMessage.style.display = 'block';
+                errorMessage.textContent = 'Error: Your age must be 16 or 17 for this qualification.';
+                return;
+            }
+        }
+        
+        if (qualification == "A Level/ BTEC (Year 13)" || qualification == "T Level (Year 2)") {
+            if (age < 17) {     
+                errorMessage.style.display = 'block';
+                errorMessage.textContent = 'Error: Your age cannot be below 17 for this qualification.';
+                return;
+            }
+        }
+
+        if (qualification == "University (Level 4)" || qualification == "University (Level 5)" || 
+            qualification == "University (Level 6)" || qualification == "University (Master's Degree)") {
+            
+            if (age < 18) {
+                errorMessage.style.display = 'block';
+                errorMessage.textContent = 'Error: Your age cannot be below 18+ for this qualification.';
+                return;
+            }
+        }
+
+        errorMessage.style.display = 'none';
+
+        localStorage.setItem("qualification", qualification);
+        localStorage.setItem("age", age);
+
+        animation();
+    
+    }
+
+    function animation() {
+        const board1 = document.querySelector('.whiteboard-frame1');
+        const board2 = document.querySelector('.whiteboard-frame2');
+        const line = document.querySelector('.line');
+        const btn = document.querySelector('.circle');
+
+        btn.classList.add('animating1');
+
+        setTimeout(() => {
+            line.classList.add('animating1');
+            board1.classList.add('animating1');
+            board2.classList.add('animating1');
+        }, 120);
+ 
+        setTimeout(() => {
+            window.location.href = 'stage_2.html';
+        }, 700);
+    }
+
+</script>
+

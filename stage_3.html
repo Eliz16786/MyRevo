@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+
+<title>MyRevo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="icon.png">
+<link rel="stylesheet" title="Default" href="default.css">
+
+<style>
+
+    .circle {
+        cursor: pointer;
+        transition: 0.2s ease;
+    }
+
+    .circle:hover {
+        background: #6b3dcc;
+    }
+
+    .rubber {
+        position: absolute;
+        bottom: -0.2rem;
+        cursor: pointer;
+        height: 4.5rem;
+        width: 12.5rem;
+        transition: 0.2s ease;
+    }
+
+    .rubber:hover {
+        background: #e2e2e2;
+    }
+    
+    .next-icon {
+        width: 3rem;
+        height: 3rem;
+    }
+
+    .back-icon {
+        width: 4rem;
+        height: 5rem;
+    }
+
+    #position1 {
+        position: absolute;
+        top: 2.5rem;
+        left: 24rem;
+        font-size: 2rem;
+    }
+
+    #position2 {
+        position: absolute;
+        top: -0.8rem;
+        left: 2.7rem;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #8a64e2;
+    }
+
+    #position3 {
+        position: absolute;
+        top: 1.7rem;
+        left: 1rem;
+        font-size: 1.3rem;
+        font-weight: 700;
+    }
+
+    #position4 {
+        position: absolute;
+        top: 6.7rem;
+        left: 1rem;
+        font-size: 1.3rem;
+        font-weight: 700;
+    }
+
+    #position5 {
+        position: absolute;
+        top: 4rem;
+        left: 12.2rem;
+        font-size: 1.3rem;
+        font-weight: 700;
+    }
+
+    #position6 {
+        position: absolute;
+        top: -0.7rem;
+        left: 3.2rem;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #ff0000;
+    }
+    
+    .box1 {
+        position: absolute;
+        left: 1.5rem;
+        top: 8.9rem;
+        width: 37rem;
+        height: 18rem;
+        border: 0.3rem solid #d9d9d9;
+        padding: 1rem;
+        border-radius: 1rem;
+        background: #FFFFFF;
+    }
+    
+    .month-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5rem;
+        font-size: 1.6rem;
+        font-weight: 700;
+    }
+ 
+    .month-nav button {
+        background: none;
+        border: none;
+        font-size: 3rem;
+        color: #8a64e2;
+        cursor: pointer;
+        padding: 0 0.4rem;
+        transition: 0.15s;
+    }
+ 
+    .month-nav button:hover { 
+        text-shadow: 0 0 0.6rem #8a64e2;
+    }
+
+    .month-nav button:disabled { 
+        color: #d9d9d9; 
+        cursor: default; 
+    }
+
+    .month-nav button:disabled:hover {
+        background: none;
+        text-shadow: none;
+    }
+ 
+    .day-headers {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        text-align: center;
+        font-weight: 700;
+        font-size: 1rem;
+        margin-bottom: 0.3rem;
+        gap: 0.4rem;
+    }
+
+    #calGrid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 0.4rem;
+    }
+ 
+    .cal-day {
+        text-align: center;
+        padding: 0.4rem 0;
+        border: 0.2rem solid #d1fae5;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        font-family: sans-serif;
+        font-size: 0.6rem;
+        font-weight: 700;
+        background: #d1fae5;
+        transition: 0.15s;
+    }
+
+    .cal-day:hover {
+        border-color: #8a64e2;
+        background-color: #FFFFFF;
+    }
+
+    .cal-day.selected {
+        border-color: #8a64e2;
+        background-color: #FFFFFF;
+    }
+
+    .cal-day.past {
+        background: #d9d9d9;
+        border-color: #d9d9d9;
+        cursor: default;
+    }
+
+    .cal-day.empty {
+        background: #FFFFFF;
+        border: none;
+        cursor: default;         
+    }
+
+    .cal-day.exam {
+        background: #fca5a5;
+        border-color: #fca5a5;
+        cursor: default;
+    }
+
+    .cal-day.unavailable {
+        background: #e5d4ff;
+        border-color: #e5d4ff;
+    }
+
+    .cal-day.selected.unavailable {
+        border-color: #8a64e2;
+        background-color: #FFFFFF;
+    }
+
+    .key {
+        margin-left: 14.9rem;
+        margin-top: 15.5rem;
+        font-size: 1.2rem;
+        display: flex;
+        flex-direction: row;
+        gap: 0.6rem;
+    }
+
+    .key-item {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+    }
+
+    .key-box {
+        width: 1rem;
+        height: 1rem;
+        border-radius: 0.3rem;
+    }
+
+    .box2 {
+        position: absolute;
+        left: 42rem;
+        top: 8.9rem;
+        width: 24rem;
+        height: 11.2rem;
+        border: 0.3rem solid #d9d9d9;
+        padding: 1rem;
+        border-radius: 1rem;
+        background: #FFFFFF;
+    }
+
+    .unavailable-icon {
+        position: absolute;
+        width: 2rem;
+        height: 2rem;
+        left: 0.5rem;
+        top: 0.5rem;
+    }
+
+    .selected-date {
+        position: absolute;
+        left: 1rem;
+        top: 3.5rem;
+        width: 7.9rem;
+        height: 2.5rem;
+        border: 0.2rem solid #d9d9d9;
+        border-radius: 0.6rem;
+        font-size: 1.1rem;
+        font-weight: 700;
+        display: flex;        
+        justify-content: flex-start;
+        align-items: center; 
+        padding-left: 0.3rem;
+    }
+
+    .toggle-wrap { 
+        position: absolute; 
+        width: 2.2rem; 
+        height: 1.2rem;
+        top: 5.4rem;
+        left: 16rem; 
+    }
+
+    .toggle-slider {
+        position: absolute; 
+        inset: 0; 
+        background: #d9d9d9;
+        border-radius: 1rem; 
+        cursor: pointer; 
+        transition: 0.2s;
+    }
+
+    .toggle-wrap input:checked + .toggle-slider { 
+        background: #17b463; 
+    }
+
+    .toggle-slider::before {
+        content: ''; 
+        position: absolute;
+        width: 0.9rem; 
+        height: 0.9rem; 
+        left: 0.15rem; 
+        top: 0.15rem;
+        background: #FFFFFF; 
+        border-radius: 50%; 
+        transition: 0.2s;
+    }
+
+    .toggle-wrap input:checked + .toggle-slider::before { 
+        transform:translateX(1rem); 
+    }
+
+    .time-input {
+        width: 7.9rem; 
+        height: 2.5rem;
+        border: 0.2rem solid #d9d9d9; 
+        border-radius: 0.6rem;
+        font-size: 1.1rem;
+        font-weight: 700;
+        text-align: center;
+        margin-top: 8.6rem;
+    }
+
+    .time-input:disabled { 
+        background: #d9d9d9; 
+        color: #aaaaaa; 
+    }
+
+    .time-input:focus { 
+        outline: none; 
+        border-color: #8a64e2; 
+    }
+
+    .arrow-icon1 { 
+        width: 2rem;
+        height: 2rem;
+        position: relative;
+        top: 0.6rem;
+    }
+
+    .delete-icon {
+        position: absolute;
+        top: 0.2rem;
+        left: 11.6rem;
+        width: 2rem;
+        height: 2.5rem;
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+    }
+
+    .box3 {
+        position: absolute;
+        left: 42rem;
+        top: 23.7rem;
+        width: 25.6rem;
+        height: 8.5rem;
+        border: 0.3rem solid #d9d9d9;
+        border-radius: 1rem;
+        padding: 0.3rem;
+        background: #FFFFFF;
+    }
+
+    .exam-icon {
+        position: absolute;
+        width: 3.2rem;
+        height: 3.2rem;
+        left: 0.1rem;
+        top: 0rem;
+    }
+
+    .table-wrap {
+        position: absolute;
+        width: 25rem;
+        top: 2.3rem;
+        left: 0.7rem;
+        right: 2rem;
+        bottom: 0.5rem;
+        overflow-y: auto;    
+    }
+
+    .table-wrap::-webkit-scrollbar { 
+        width: 0.4rem; 
+    }
+
+    .table-wrap::-webkit-scrollbar-thumb { 
+        background: #f0e6ff;
+        border-radius: 2.5rem;
+    }
+
+    .exam-row {
+        display: grid;
+        grid-template-columns: 1.7fr 1.4fr 0.6fr 0.4fr 0.9fr;
+        align-items: center;
+        justify-items: center;
+        width: 22rem;
+        border: 0.2rem solid #d9d9d9;
+        border-radius: 1rem;
+        background: white;
+        gap: 0.4rem;
+        padding: 0rem 1rem;
+    }
+
+    #examView {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 0.5rem; 
+        margin: 0.3rem;
+    }
+
+    .exam-name {
+        font-size: 1rem;
+        font-weight: 800;
+        max-width: 4rem;
+        overflow-x: auto;
+        white-space: nowrap;
+        text-overflow: clip;
+    }
+
+    .exam-date {
+        width: 5rem;
+        font-size: 1rem;
+        font-weight: 800;
+    }
+
+    .time-input2 {
+        width: 4rem; 
+        height: 1.9rem;
+        border: 0.2rem solid #d9d9d9; 
+        border-radius: 0.6rem;
+        font-size: 1rem;
+        font-weight: 700;
+    }
+
+    .time-input2:focus { 
+        outline: none; 
+        border-color: #8a64e2; 
+    }
+
+    .arrow-icon2 { 
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .error-msg {
+        display: none;
+        position: absolute;
+        padding: 1rem;;
+        top: 2.7rem;
+        width: 17rem;
+        left: 1.5rem;
+        color: #FF0000;
+        background: #FFFFFF;
+        font-size: 0.9rem;
+        font-family: sans-serif;
+        border: 0.3rem solid #FF0000;
+        border-radius: 1rem;
+    }
+
+</style>
+
+<main class="whiteboard-frame1 animating2">
+
+    <img class="page-icon" src="page_icon.png" alt="MyRevo Icon">
+
+    <section class="whiteboard-frame2 animating2">
+        <p class="stages"><strong><span style="color: #8a64e2;">Stage 3</span></strong>of 4</p>
+        
+        <section class="dots">
+            <p class="stage-dot active"></p>
+            <p class="stage-dot active"></p>
+            <p class="stage-dot active"></p>
+            <p class="stage-dot"></p>
+        </section>
+
+        <h1 class="font1" id="position1">Your availability</h1>
+        <svg style="margin-left: 24rem" width="297" height="226" viewBox="0 0 160 10" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,5 Q20,0 40,5 Q60,10 80,5 Q100,0 120,5 Q140,10 160,5" 
+                fill="none" stroke="#8a64e2" stroke-width="4"/>
+        </svg>
+
+        <section class="box1 font2">
+            
+            <section class="month-nav">
+                <button type="button" id="prevBtn" onclick="changeMonth(-1)">&#8249;</button>
+                <span id="monthLabel"></span>
+                <button type="button" id="nextBtn" onclick="changeMonth(1)">&#8250;</button>
+            </section>
+ 
+            <section class="day-headers">
+                <div>Mon</div><div>Tue</div><div>Wed</div>
+                <div>Thu</div><div>Fri</div><div>Sat</div><div>Sun</div>
+            </section>
+ 
+            <div id="calGrid"></div>
+
+        </section>
+
+        <section class="key font2">
+            <div class="key-item">
+                <div class="key-box" style="background:#d1fae5;outline:0.15rem solid #d1fae5"></div>
+                <span>Available</span>
+            </div>
+
+            <div class="key-item">
+                <div class="key-box" style="background:#e5d4ff;outline:0.15rem solid #e5d4ff"></div>
+                <span>Unavailable</span>
+            </div>
+
+            <div class="key-item">
+                <div class="key-box" style="background:#fca5a5;outline:0.15rem solid #fca5a5"></div>
+                <span>Exam</span>
+            </div>
+
+            <div class="key-item">
+                <div class="key-box" style="background:#FFFFFF;outline:0.15rem solid #8a64e2"></div>
+                <span>Selected</span>
+            </div>
+
+            <div class="key-item">
+                <div class="key-box" style="background:#d9d9d9;outline:0.15rem solid #d9d9d9"></div>
+                <span>Blocked</span>
+            </div>
+        </section>
+
+        <section class="box2 font2">
+            <img class="unavailable-icon" src="unavailable_icon.png" alt="Unavailable Icon">
+            <p id="position2">Unavailable</p>
+            <p id="position3">Selected date</p>
+            <p class="selected-date" id="selectedDate"></p>
+            <p id="position4">Time</p>
+            <p id="position5">All day</p>
+
+            <label class="toggle-wrap">
+                <input type="checkbox" id="allDay" onchange="allDay()">
+                <span class="toggle-slider"></span>
+            </label>
+
+            <input class="time-input font2" type="time" id="timeStart" value="00:00" onchange="
+                if (this.value === timeEnd.value && !(this.value === '00:00' && timeEnd.value === '00:00')) {
+                    this.value = '00:00';
+                    timeEnd.value = '00:00';
+                    document.querySelector('.error-msg').style.display = 'block';
+                    document.querySelector('.error-msg').textContent = 'Error: You cannot have the start time equal to the end time.';
+                    return;
+
+                } else if (this.value > timeEnd.value && this.value != '00:00' && timeEnd.value != '00:00') {
+                    this.value = '00:00';
+                    timeEnd.value = '00:00';
+                    document.querySelector('.error-msg').style.display = 'block';
+                    document.querySelector('.error-msg').textContent = 'Error: You cannot have the start time bigger than the end time.';
+                    return;
+
+                } else {
+                    document.querySelector('.error-msg').style.display = 'none';
+                }
+                toggleDeleteBtn();
+                ">
+            <img class="arrow-icon1" src="arrow_icon.png" alt="Arrow Icon">
+            <input class="time-input font2" type="time" id="timeEnd" value="00:00" onchange="
+                if (this.value === timeStart.value && !(this.value === '00:00' && timeStart.value === '00:00')) {
+                    this.value = '00:00';
+                    timeStart.value = '00:00';
+                    document.querySelector('.error-msg').style.display = 'block';
+                    document.querySelector('.error-msg').textContent = 'Error: You cannot have the start time equal to the end time.';
+                    return;
+
+                } else if (this.value < timeStart.value && this.value != '00:00' && timeStart.value != '00:00') {
+                    this.value = '00:00';
+                    timeStart.value = '00:00';
+                    document.querySelector('.error-msg').style.display = 'block';
+                    document.querySelector('.error-msg').textContent = 'Error: You cannot have the start time bigger than the end time.';
+                    return;
+
+                } else {
+                    document.querySelector('.error-msg').style.display = 'none';
+                }
+                toggleDeleteBtn();
+                ">
+
+            <button type="button" class="delete-icon" onclick="delAvailability()"><img class="delete-icon" src="delete_icon.png" alt="Delete Icon"></button>
+        </section>
+
+        <section class="box3 font2">
+                <img class="exam-icon" src="exam_icon.png" alt="Exam Icon">
+                <p id="position6">Exams</p>
+            <section class="table-wrap">
+                <p id="examView"></p>
+            </section>
+        </section>
+
+        <button type="button" class="rubber" onclick="previousPage()"><img class="back-icon" src="back_icon.png" alt="Back Icon">Back</button>
+
+        <h3 class="error-msg font2"></h3>
+            
+    </section>
+
+    <p class="whiteboard-top"></p>
+    <p class="line animating2"></p>
+    <button type="button" class="circle animating2" onclick="nextPage()">Next<img class="next-icon" src="next_icon.png" alt="Next Icon"></button>
+
+</main>
+
+<script src="device-check.js"></script>
+
+<script>
+    
+    window.onload = () => {
+        const skipLoad = sessionStorage.getItem('skipLoad');
+
+        if (skipLoad) {
+            sessionStorage.removeItem('skipLoad');
+
+            const board1 = document.querySelector('.whiteboard-frame1');
+            const board2 = document.querySelector('.whiteboard-frame2');
+            const line = document.querySelector('.line');
+            const btn = document.querySelector('.circle');
+
+            board1.classList.remove('animating2');
+            board2.classList.remove('animating2');
+            line.classList.remove('animating2');
+            btn.classList.remove('animating2');
+
+            board1.classList.add('no-animation');
+            board2.classList.add('no-animation');
+            line.classList.add('no-animation');
+            btn.classList.add('no-animation');
+        }
+    };
+
+    function previousPage() {
+        sessionStorage.setItem('skipLoad', 'true');
+        window.location.href = 'stage_2.html';
+    }
+ 
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+ 
+    let viewMonth = today.getMonth();
+    let viewYear = today.getFullYear();
+    let selected = null;
+    let availability = {};
+
+    const exams = JSON.parse(localStorage.getItem('exams'));
+    const lastExamDate = new Date(Math.max(...exams.map(ex => new Date(ex.date))));
+    const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+ 
+    function calendar() {
+        const timeStart = document.getElementById('timeStart');
+        const timeEnd = document.getElementById('timeEnd');
+        const grid = document.getElementById('calGrid');
+        grid.innerHTML = "";
+ 
+        document.getElementById('monthLabel').textContent = monthNames[viewMonth] + ' ' + viewYear;
+ 
+        const firstDay = new Date(viewYear, viewMonth, 1).getDay();
+        const offset = (firstDay + 6) % 7;
+        const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+ 
+        for (let i = 0; i < offset; i++) {
+            const empty = document.createElement('div');
+            empty.className = 'cal-day empty';
+            grid.appendChild(empty);
+        }
+ 
+        for (let d = 1; d <= daysInMonth; d++) {
+            const currentDate = `${viewYear}-${String(viewMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+            const isExam = exams.some(ex => ex.date === currentDate);
+            const box  = document.createElement('div');
+            const date = new Date(viewYear, viewMonth, d);
+            const iso = currentDate;
+            const maxAllowedDate = lastExamDate;
+ 
+            box.textContent = d;
+            box.className = 'cal-day';
+ 
+            if (date < today) {
+                box.classList.add('past');
+            } else {
+                box.classList.remove('selected', 'unavailable');
+
+                if (selected === iso && !isExam) {
+                    box.classList.add('selected');
+                }
+
+                let recordDate = {};
+                
+                if (selected === iso) {
+                    recordDate = { start: timeStart.value, end: timeEnd.value };
+                } else {
+                    recordDate = availability[iso];
+                }
+
+                if (recordDate && !isExam) {
+                    if (recordDate.end !== '00:00' || (recordDate.start === '00:00' && recordDate.end === '23:59')) {
+                        box.classList.add('unavailable');
+                    }
+                }
+ 
+                box.onclick = function() {
+                    if (isExam) return;
+
+                    if (selected) {
+                        availability[selected] = { start: timeStart.value, end: timeEnd.value };
+                    }
+                                    
+                    selected = iso;
+
+                    const saved = availability[iso] || { start: '00:00', end: '00:00' };
+                    timeStart.value = saved.start;
+                    timeEnd.value = saved.end;
+
+                    const isAllDay = saved.start === '00:00' && saved.end === '23:59';
+                    document.getElementById('allDay').checked = isAllDay;
+                    timeStart.disabled = isAllDay;
+                    timeEnd.disabled = isAllDay;
+
+                    toggleDeleteBtn();
+                    const selectedDate = document.querySelector('.selected-date');
+                    const day = date.getDate();
+                    const month = date.getMonth() + 1;
+                    const year = date.getFullYear();
+                    selectedDate.textContent = `${day} ${monthNames[month - 1]} ${year}`;
+                    calendar();
+                };
+            }
+
+            if (date > maxAllowedDate) {
+                box.classList.add('past');
+            }
+
+            if (isExam) {
+                box.classList.add('exam');
+            }
+ 
+            grid.appendChild(box);
+        }
+
+        const prevBtn = document.getElementById('prevBtn');
+        if (viewMonth === today.getMonth() && viewYear === today.getFullYear()) {
+            prevBtn.disabled = true;
+        } else {
+            prevBtn.disabled = false;
+        }
+
+        const nextBtn = document.getElementById('nextBtn');
+        const maxDate = new Date( lastExamDate.getFullYear(), lastExamDate.getMonth(), 1);;
+        const viewingDate = new Date(viewYear, viewMonth, 1);
+
+        if (viewingDate >= maxDate) {
+            nextBtn.disabled = true;
+        } else {
+            nextBtn.disabled = false;
+        }
+    }
+ 
+    function changeMonth(num) {
+        viewMonth += num;
+        if (viewMonth > 11) { 
+            viewMonth = 0;  
+            viewYear++; 
+        }
+
+        if (viewMonth < 0)  { 
+            viewMonth = 11; 
+            viewYear--; 
+        }
+
+        calendar();
+    }
+
+    function allDay() {
+        const on = document.getElementById('allDay').checked;
+        document.getElementById('timeStart').disabled = on;
+        document.getElementById('timeEnd').disabled = on;
+        
+        if (on) {
+            document.getElementById('timeStart').value = '00:00';
+            document.getElementById('timeEnd').value  = '23:59';
+        } else {
+            document.getElementById('timeStart').value = '00:00';
+            document.getElementById('timeEnd').value  = '00:00';
+        }
+
+        if (selected) {
+            availability[selected] = { start: timeStart.value, end: timeEnd.value };
+        }
+    }
+
+    function delAvailability() {
+        if (document.getElementById('timeStart').value != '00:00' || document.getElementById('timeEnd').value != '00:00') {
+            document.getElementById('timeStart').value = '00:00';
+            document.getElementById('timeEnd').value = '00:00';
+            toggleDeleteBtn();
+        }
+
+    }
+
+    function toggleDeleteBtn() {
+        const button = document.querySelector('.delete-icon');
+        const isAllDay = document.getElementById('allDay').checked;
+
+        if (!isAllDay && (document.getElementById('timeStart').value !== '00:00' || document.getElementById('timeEnd').value !== '00:00')) {
+            button.style.display = 'block';
+        } else {
+            button.style.display = 'none';
+        }
+    }
+
+    function fmtDate(iso) {
+        if (!iso) return '';
+        const [y, m, d] = iso.split('-');
+        return ` ${parseInt(d)} ${monthNames[parseInt(m) - 1]} ${y}`;
+    }
+
+    function validateExamTimes() {
+        for (let i = 0; i < exams.length; i++) {
+            for (let j = i + 1; j < exams.length; j++) {
+
+                if (exams[i].date !== exams[j].date) continue;
+
+                const start1El = document.getElementById(`timeStart2-${i}`);
+                const end1El   = document.getElementById(`timeEnd2-${i}`);
+                const start2El = document.getElementById(`timeStart2-${j}`);
+                const end2El   = document.getElementById(`timeEnd2-${j}`);
+
+                const start1 = start1El.value;
+                const end1   = end1El.value;
+                const start2 = start2El.value;
+                const end2   = end2El.value;
+
+                if (
+                    start1 !== '00:00' &&
+                    end1   !== '00:00' &&
+                    start2 !== '00:00' &&
+                    end2   !== '00:00' &&
+                    start1 < end2 &&
+                    start2 < end1
+                ) {
+                    document.querySelector('.error-msg').style.display = 'block';
+                    document.querySelector('.error-msg').textContent = 'Error: Two exams cannot overlap on the same day.';
+                    start1El.value = '00:00';
+                    end1El.value   = '00:00';
+                    start2El.value = '00:00';
+                    end2El.value   = '00:00';
+                    return false;
+                }
+            }
+        }
+
+        document.querySelector('.error-msg').style.display = 'none';
+        return true;
+    }
+
+    function examsView() {
+        const view = document.getElementById('examView');
+        view.innerHTML = '';
+        
+        exams.forEach((ex, i) => {
+            const row = document.createElement('div');
+            row.className = 'exam-row';
+            row.innerHTML = `
+                <p class="exam-name font2">${ex.name}</p>
+                <p class="exam-date font2">${fmtDate(ex.date)}</p>
+                <input class="time-input2 font2" type="time" id="timeStart2-${i}" value="00:00" onchange="
+                    const end = document.getElementById('timeEnd2-${i}');
+                    if (this.value === end.value && !(this.value === '00:00' && end.value === '00:00')) {
+                        this.value = '00:00';
+                        end.value = '00:00';
+                        document.querySelector('.error-msg').style.display = 'block';
+                        document.querySelector('.error-msg').textContent = 'Error: You cannot have the start time equal to the end time.';
+                        return;
+
+                    } else if (this.value > end.value && this.value !== '00:00' && end.value !== '00:00') {
+                        this.value = '00:00';
+                        end.value = '00:00';
+                        document.querySelector('.error-msg').style.display = 'block';
+                        document.querySelector('.error-msg').textContent = 'Error: You cannot have the start time bigger than the end time.';
+                        return;
+
+                    } else {
+                        document.querySelector('.error-msg').style.display = 'none';
+                        validateExamTimes();
+                    }
+                    ">
+                <img class="arrow-icon2" src="arrow_icon.png" alt="Arrow Icon">
+                <input class="time-input2 font2" type="time" id="timeEnd2-${i}" value="00:00" onchange="
+                    const start = document.getElementById('timeStart2-${i}');
+                    if (this.value === start.value && !(this.value === '00:00' && start.value === '00:00')) {
+                        this.value = '00:00';
+                        start.value = '00:00';
+                        document.querySelector('.error-msg').style.display = 'block';
+                        document.querySelector('.error-msg').textContent = 'Error: You cannot have the start time equal to the end time.';
+                        return;
+
+                    } else if (this.value < start.value && this.value !== '00:00' && start.value !== '00:00') {
+                        this.value = '00:00';
+                        start.value = '00:00';
+                        document.querySelector('.error-msg').style.display = 'block';
+                        document.querySelector('.error-msg').textContent = 'Error: You cannot have the start time bigger than the end time.';
+                        return;
+
+                    } else {
+                        document.querySelector('.error-msg').style.display = 'none';
+                        validateExamTimes();
+                    }
+                ">
+            `;
+            view.appendChild(row);
+        });
+    }
+
+    document.getElementById('timeStart').addEventListener('change', () => {
+        if (selected) {
+            availability[selected] = { start: timeStart.value, end: timeEnd.value };
+        }
+        toggleDeleteBtn();
+        calendar();
+    });
+
+    document.getElementById('timeEnd').addEventListener('change', () => {
+        if (selected) {
+            availability[selected] = { start: timeStart.value, end: timeEnd.value };
+        }
+        toggleDeleteBtn();
+        calendar();
+    });
+
+    function nextPage() {
+        const errorMessage = document.querySelector('.error-msg');
+        const timeStartl = document.getElementById('timeStart');
+        const timeEndl = document.getElementById('timeEnd');
+
+        if (selected) {
+            availability[selected] = { start: timeStartl.value, end: timeEndl.value };
+        }
+
+        for (const date in availability) {
+            const { start, end } = availability[date];
+
+            if (start !== '00:00' && end === '00:00') {
+                errorMessage.style.display = 'block';
+                errorMessage.textContent = 'Error: You cannot have the start time bigger than the end time.';
+                return;
+            }
+        }
+
+        const examInfo = [];
+
+        for (let i = 0; i < exams.length; i++) {
+            const timeStart2 = document.getElementById(`timeStart2-${i}`);
+            const timeEnd2   = document.getElementById(`timeEnd2-${i}`);
+
+            if (timeStart2.value === '00:00' && timeEnd2.value === '00:00') {
+                errorMessage.style.display = 'block';
+                errorMessage.textContent = 'Error: You cannot leave any exam times blank.';
+                return;
+
+            } else if (timeStart2.value !== '00:00' && timeEnd2.value === '00:00') {
+                errorMessage.style.display = 'block'
+                errorMessage.textContent = 'Error: You cannot have the start time bigger than the end time.';
+                return;
+            }
+            
+            examInfo.push({
+            name: exams[i].name,
+            date: exams[i].date,
+            start: timeStart2.value,
+            end: timeEnd2.value
+            });
+        }
+
+        localStorage.setItem('examInfo', JSON.stringify(examInfo));
+
+        const unavailableInfo = [];
+
+        for (const date in availability) {
+            const { start, end } = availability[date];
+
+            const isUnavailable = end !== '00:00' || (start === '00:00' && end === '23:59');
+
+            if (isUnavailable) {
+                unavailableInfo.push({ date, start, end });
+            }
+        }
+
+        localStorage.setItem('unavailableInfo', JSON.stringify(unavailableInfo));
+
+        errorMessage.style.display = 'none';
+        animation();
+    }
+
+    function animation() {
+        const board1 = document.querySelector('.whiteboard-frame1');
+        const board2 = document.querySelector('.whiteboard-frame2');
+        const line = document.querySelector('.line');
+        const btn = document.querySelector('.circle');
+        
+        board1.classList.remove('animating2');
+        board2.classList.remove('animating2');
+        line.classList.remove('animating2');
+        btn.classList.remove('animating2');
+        board1.classList.remove('no-animation');
+        board2.classList.remove('no-animation');
+        line.classList.remove('no-animation');
+        btn.classList.remove('no-animation');
+
+        btn.classList.add('animating1');
+
+        setTimeout(() => {
+            line.classList.add('animating1');
+            board1.classList.add('animating1');
+            board2.classList.add('animating1');
+        }, 120);
+ 
+        setTimeout(() => {
+            window.location.href = 'stage_4.html';
+        }, 700);
+    }
+
+    toggleDeleteBtn();
+    calendar();
+    examsView();
+
+</script>

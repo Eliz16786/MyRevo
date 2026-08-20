@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+
+<title>MyRevo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="icon.png">
+<link rel="stylesheet" title="Default" href="default.css">
+
+<style>
+    @keyframes slide{
+        0%{ width:0%; }
+        100%{ width:100%; }
+    }
+
+    #position1 {
+        position: absolute;
+        top: 10rem;
+        left: 28rem;
+        font-size: 3.5rem;
+        font-weight: 700;
+    }
+
+    .generate-icon-purple {
+        position: absolute;
+        width: 6rem;
+        top: 11.8rem;
+        left: 21.4rem;
+    }
+
+    .generate-box {
+        position: relative;
+        width: 30rem;
+        height: 3rem;
+        top: 17.5rem;
+        left: 18rem;
+        border: 0.3em solid #000000;
+        border-radius: 1.5rem;
+    }
+
+    .slider {
+        position: absolute;
+        top: -1rem;
+        left: 0rem;
+        height: 100%;
+        background: #8a64e2;
+        border-radius: 1.2rem;
+        animation: slide 15s ease-out forwards;
+    }
+
+</style>
+
+<main class="whiteboard-frame1 animating2">
+
+    <img class="page-icon" src="page_icon.png" alt="MyRevo Icon">
+
+    <section class="whiteboard-frame2 animating2">
+        <p class="font2" id="position1">Generating ... </p>
+        <img class="generate-icon-purple" src="generate_icon_purple.png" alt="Generate Icon Purple">
+        
+        <section class="generate-box">
+            <p class="slider"></p>
+        </section>
+
+        <p class="rubber"></p>
+    </section>
+
+    <p class="whiteboard-top"></p>
+    <p class="line animating2"></p>
+    <p class="circle animating2"></p>
+
+</main>
+
+<script src="device-check.js"></script>
+
+<script>
+    
+    window.onload = () => {
+        const skipLoad = sessionStorage.getItem('skipLoad');
+
+        if (skipLoad) {
+            sessionStorage.removeItem('skipLoad');
+
+            const board1 = document.querySelector('.whiteboard-frame1');
+            const board2 = document.querySelector('.whiteboard-frame2');
+            const line = document.querySelector('.line');
+            const btn = document.querySelector('.circle');
+
+            board1.classList.remove('animating2');
+            board2.classList.remove('animating2');
+            line.classList.remove('animating2');
+            btn.classList.remove('animating2');
+
+            board1.classList.add('no-animation');
+            board2.classList.add('no-animation');
+            line.classList.add('no-animation');
+            btn.classList.add('no-animation');
+        }
+    };
+
+    document.querySelector('.slider').addEventListener('animationend', () => {
+        animation();
+    });
+
+    function animation() {
+        const board1 = document.querySelector('.whiteboard-frame1');
+        const board2 = document.querySelector('.whiteboard-frame2');
+        const line = document.querySelector('.line');
+        const btn = document.querySelector('.circle');
+        
+        board1.classList.remove('animating2');
+        board2.classList.remove('animating2');
+        line.classList.remove('animating2');
+        btn.classList.remove('animating2');
+        board1.classList.remove('no-animation');
+        board2.classList.remove('no-animation');
+        line.classList.remove('no-animation');
+        btn.classList.remove('no-animation');
+
+        btn.classList.add('animating1');
+
+        setTimeout(() => {
+            line.classList.add('animating1');
+            board1.classList.add('animating1');
+            board2.classList.add('animating1');
+        }, 120);
+ 
+        setTimeout(() => {
+            window.location.href = 'stage_6.html';
+        }, 700);
+    }
+
+</script>

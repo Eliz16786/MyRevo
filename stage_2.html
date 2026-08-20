@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+
+<title>MyRevo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="icon.png">
+<link rel="stylesheet" title="Default" href="default.css">
+
+<style>
+
+    .circle {
+        cursor: pointer;
+        transition: 0.2s ease;
+    }
+
+    .circle:hover {
+        background: #6b3dcc;
+    }
+
+    .rubber {
+        position: absolute;
+        bottom: -0.2rem;
+        cursor: pointer;
+        height: 4.5rem;
+        width: 12.5rem;
+        transition: 0.2s ease;
+    }
+
+    .rubber:hover {
+        background: #e2e2e2;
+    }
+    
+    .next-icon {
+        width: 3rem;
+        height: 3rem;
+    }
+
+    .back-icon {
+        width: 4rem;
+        height: 5rem;
+    }
+
+    #position1 {
+        position: absolute;
+        top:2.5rem;
+        left: 25rem;
+        font-size: 2rem;
+    }
+
+    #position2 {
+        position: absolute;
+        top: 8rem;
+        left: 2.6rem;
+        font-size: 1.9rem;
+        color: #8a64e2;
+    }
+
+    #position3 {
+        position: absolute;
+        top: 8rem;
+        left: 22.3rem;
+        font-size: 1.9rem;
+        color: #8a64e2;
+    }
+
+    #position4 {
+        position: absolute;
+        top: 8rem;
+        left: 39.8rem;
+        font-size: 1.9rem;
+        color: #8a64e2;
+    }
+
+    #position5 {
+        position: absolute;
+        top: 8rem;
+        left: 50rem;
+        font-size: 1.9rem;
+        color: #8a64e2;
+    }
+
+    .table-wrap {
+        position: absolute;
+        top: 11.3rem;
+        left: 2rem;
+        right: 2rem;
+        bottom: 5.2rem;
+        overflow-y: auto;    
+    }
+
+    .table-wrap::-webkit-scrollbar { 
+        width: 0.4rem; 
+    }
+
+    .table-wrap::-webkit-scrollbar-thumb { 
+        background: #f0e6ff;
+        border-radius: 2.5rem;
+    }
+ 
+    .exam-row {
+        display: grid;
+        grid-template-columns: 1.7fr 1.5fr 0.1fr 1.2fr 0.3fr;
+        align-items: center;
+        height: 3.4rem;
+        border: 0.2rem solid #d9d9d9;
+        border-radius: 1rem;
+        margin-bottom: 1rem;
+        background: white;
+        padding: 0.5rem;
+        gap: 1rem;
+    }
+    
+    .exam-name {
+        font-size: 1.3rem;
+        font-weight: 800;
+        border: 0.2rem solid #d9d9d9;
+        border-radius: 0.8rem;
+        padding: 0.7rem;
+        overflow-x: auto;
+        white-space: nowrap;
+        text-overflow: clip;
+    }
+
+    .exam-name:focus { 
+        outline: none; 
+        border-color: #8a64e2; 
+    }
+ 
+    .exam-qual {
+        height: 2.9rem;
+        font-size: 1.3rem;
+        font-weight: 800;
+        border: 0.2rem solid #d9d9d9;
+        border-radius: 0.8rem;
+        display: flex;
+        align-items: center;
+        padding: 0 0.7rem;
+    } 
+
+    .date-input {
+        width: 85%;
+        height: 50%;
+        font-size: 1.3rem;
+        font-weight: 800;
+        border: 0.2rem solid #d9d9d9;
+        border-radius: 0.8rem;
+        padding: 0.6rem;
+        cursor: pointer;
+    }
+
+    .date-input:focus { 
+        outline: none; 
+        border-color: #8a64e2; 
+    }
+
+    .conf-cell { 
+        display: flex;
+        gap: 0.1rem;
+    }
+
+    .conf-btn {
+        width: 4rem; 
+        height: 3.3rem;
+        border: 0.2rem solid #d9d9d9;
+        border-radius: 0.8rem;
+        background: #FFFFFF;
+        cursor: pointer;
+        display: flex; 
+        align-items: center; 
+        justify-content: center;
+        margin-left: 0.2rem;
+    }
+
+    .conf-btn.good:hover, .conf-btn.good.active { 
+        background: #d1fae5; 
+        border-color: #4ccf62; 
+    }
+
+    .conf-btn.ok:hover, .conf-btn.ok.active { 
+        background: #fef3c7; 
+        border-color: #f5a822; 
+    }
+    
+    .conf-btn.bad:hover, .conf-btn.bad.active { 
+        background: #fee2e2; 
+        border-color: #ef4444; 
+    }
+    
+    .conf-icons {
+        width: 4rem;
+    }
+ 
+    .add-row-btn {
+        width: 100%;
+        height: 4.7rem;
+        border: 0.2rem dashed #8a64e2;
+        border-radius: 0.8rem;
+        background: white;
+        padding: 0.4rem;
+        font-size: 1.2rem;
+        font-family: sans-serif;
+        font-weight: 700;
+        color: #8a64e2;
+        cursor: pointer;
+        transition: 0.2s ease;
+        margin-top: 0.1rem;
+    }
+    
+    .add-row-btn:hover { 
+        background: #f0e6ff; 
+    }
+
+    .delete-icon {
+        width: 2.5rem;
+        height: 3rem;
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+    }
+
+    .pop-up {
+        position: fixed;
+        top: 0.1rem;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 1rem;
+        border-radius: 0.8rem;
+        font-family: sans-serif;
+        font-size: 1.2rem;
+        font-weight: 700;
+        z-index: 999;
+        opacity: 0;
+        transition: 0.3s opacity;
+    }
+
+    .pop-up.success { 
+        background: #d1fae5; 
+        border: 2px solid #10b981; 
+        color: #065f46; 
+    }
+
+    .pop-up.error { 
+        background: #fee2e2; 
+        border: 2px solid #ef4444; 
+        color: #991b1b; 
+    }
+
+    .pop-up.show { 
+        opacity: 1; 
+    }
+
+    .error-msg {
+        display: none;
+        position: absolute;
+        padding: 1rem;;
+        bottom: -0.8rem;
+        width: 30rem;
+        left: 11em;
+        color: #FF0000;
+        background: #FFFFFF;
+        font-size: 1.4rem;
+        border: 0.3rem solid #FF0000;
+        border-radius: 1rem;
+    }
+
+    .dropdown {
+        width: calc(100% + 1.4rem);
+        height: 100%;
+        margin-left: -0.7rem;
+        margin-right: -0.7rem;
+        border: 0rem solid #d9d9d9;
+        border-radius: 0.6rem;
+        font-size: 1.3rem;
+        font-weight: 800;
+        cursor: pointer;
+        padding: 0 0.4rem;
+    }
+
+    .dropdown:focus {
+        outline: none; 
+        box-shadow: 0 0 0 0.2rem #8a64e2;
+    }
+
+</style>
+
+
+<main class="whiteboard-frame1 animating2">
+
+    <p class="pop-up"></p>
+
+    <img class= "page-icon" src="page_icon.png" alt="MyRevo Icon">
+
+    <div class="page-wrapper" id="pageWrapper"></div>
+        <section class="whiteboard-frame2 animating2">
+            <p class="stages"><strong><span style="color: #8a64e2;">Stage 2</span></strong>of 4</p>
+            
+            <section class="dots">
+                <p class="stage-dot active"></p>
+                <p class="stage-dot active"></p>
+                <p class="stage-dot"></p>
+                <p class="stage-dot"></p>
+            </section>
+
+            <h1 class="font1" id="position1">Add your exams</h1>
+            <svg style="margin-left: 25rem" width="252" height="225" viewBox="0 0 160 10" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0,5 Q20,0 40,5 Q60,10 80,5 Q100,0 120,5 Q140,10 160,5" 
+                    fill="none" stroke="#8a64e2" stroke-width="4"/>
+            </svg>
+
+            <h2 class="font2" id="position2">Exam</h2>
+            <h2 class="font2" id="position3">Qualification</h2>
+            <h2 class="font2" id="position4">Date</h2>
+            <h2 class="font2" id="position5">Confidence</h2>
+            
+            <section class="table-wrap">
+                <p id="examList"></p>
+                <button type="button" class="add-row-btn" id="addBtn" onclick="addExam()">
+                    <span style="font-size: 2rem; vertical-align: middle; margin-right: 0.9rem">+</span>
+                    <span style="vertical-align: middle;">Add another exam</span></button>
+            </section>
+
+            <button type="button" class="rubber" onclick="previousPage()"><img class="back-icon" src="back_icon.png" alt="Back Icon">Back</button>
+
+            <h3 class="error-msg font2"></h3>
+            
+        </section>
+    </div>
+
+    <p class="whiteboard-top"></p>
+    <p class="line animating2"></p>
+    <button class="circle animating2" onclick="nextPage()">Next<img class="next-icon" src="next_icon.png" alt="Next Icon"></button>
+
+</main>
+
+<script src="device-check.js"></script>
+
+<script>
+    
+    window.onload = () => {
+        const skipLoad = sessionStorage.getItem('skipLoad');
+
+        if (skipLoad) {
+            sessionStorage.removeItem('skipLoad');
+
+            const board1 = document.querySelector('.whiteboard-frame1');
+            const board2 = document.querySelector('.whiteboard-frame2');
+            const line = document.querySelector('.line');
+            const btn = document.querySelector('.circle');
+
+            board1.classList.remove('animating2');
+            board2.classList.remove('animating2');
+            line.classList.remove('animating2');
+            btn.classList.remove('animating2');
+
+            board1.classList.add('no-animation');
+            board2.classList.add('no-animation');
+            line.classList.add('no-animation');
+            btn.classList.add('no-animation');
+        }
+    };
+
+    function previousPage() {
+        window.location.href = 'stage_1.html'
+    }
+
+    const maxLength = 35;
+
+    function qualificationChecker(i) {
+        let qualification = localStorage.getItem("qualification");
+
+        if (qualification === "A Level/ AS Level/ BTEC (Year 12)") {
+            return `
+                <select class="dropdown font2" onchange="exams[${i}].qualification = this.value">
+                    <option value="" disabled selected>Select qualification</option>
+                    <option ${exams[i].qualification === "A Level Year 12" ? "selected" : ""}>A Level Year 12</option>
+                    <option ${exams[i].qualification === "AS Level Year 12" ? "selected" : ""}>AS Level Year 12</option>
+                    <option ${exams[i].qualification === "BTEC Year 12" ? "selected" : ""}>BTEC Year 12</option>
+                </select>`;
+        }
+
+        if (qualification === "A Level/ BTEC (Year 13)") {
+            return `
+                <select class="dropdown font2" onchange="exams[${i}].qualification = this.value">
+                    <option value="" disabled selected>Select qualification</option>
+                    <option ${exams[i].qualification === "A Level Year 13" ? "selected" : ""}>A Level Year 13</option>
+                    <option ${exams[i].qualification === "BTEC Year 13" ? "selected" : ""}>BTEC Year 13</option>
+                </select>`;
+        }
+
+        exams[i].qualification = qualification;
+
+        return qualification;
+    }
+ 
+    const exams = [
+        { name: 'Enter exam name', qualification: null, date: null, confidence: null },
+        { name: 'Enter exam name', qualification: null, date: null, confidence: null },
+    ];
+ 
+    function fmtDate(iso) {
+        if (!iso) return '';
+        const [y, m, d] = iso.split('-');
+        return `${d}/${m}/${String(y).slice(2)}`;
+    }
+ 
+    function process() {
+        const today = new Date().toISOString().split('T')[0];
+        const nextYear = new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split('T')[0];
+        const list = document.getElementById('examList');
+        list.innerHTML = '';
+ 
+        exams.forEach((ex, i) => {
+            const row = document.createElement('div');
+            row.className = 'exam-row';
+            row.innerHTML = `
+                <input class="exam-name font2" type="text" value="${ex.name}" onchange="exams[${i}].name=this.value"></input>
+                <div class="exam-qual font2">${qualificationChecker(i)}</div>
+                <input class="date-input font2" type="date" min="${today}" max="${nextYear}" value="${ex.date}" 
+                    onchange="
+                        if (this.value < '${today}' || this.value > '${nextYear}') {
+                            this.value = '';
+                            document.querySelector('.error-msg').style.display = 'block';
+                            document.querySelector('.error-msg').textContent = 'Error: Date must be between today and next year.';
+                            return;
+                        }
+                        document.querySelector('.error-msg').style.display = 'none';
+                        exams[${i}].date=this.value;
+                        process()">
+                <div class="conf-cell">
+                    <button type="button" class="conf-btn good ${ex.confidence==='good'?'active':''}" onclick="setConf(${i},'good')">
+                        <img class="conf-icons" src="good_icon.png" alt="Good Icon"></button>
+                    <button type="button" class="conf-btn ok ${ex.confidence==='ok'  ?'active':''}" onclick="setConf(${i},'ok')">
+                        <img class="conf-icons" src="okay_icon.png" alt="Okay Icon"></button>
+                    <button type="button" class="conf-btn bad ${ex.confidence==='bad' ?'active':''}" onclick="setConf(${i},'bad')">
+                        <img class="conf-icons" src="bad_icon.png" alt="Bad Icon"></button>
+                </div>
+                <button type="button" class="delete-icon" onclick="delExam(${i})"><img class="delete-icon" src="delete_icon.png" alt="Delete Icon"></button>
+            `;
+            list.appendChild(row);
+        });
+
+        localStorage.setItem("exams", JSON.stringify(exams));
+ 
+        document.querySelector('#addBtn').style.display = 'block';
+    }
+ 
+    function setConf(i, value) { 
+        exams[i].confidence = value; 
+        process(); 
+    }
+ 
+    function delExam(i) {
+        exams.splice(i, 1);
+        process();
+        showPopUp('Successfully deleted', 'error');
+    }
+
+    function addExam() {
+        if (exams.length >= maxLength) {
+            const errorMessage = document.querySelector('.error-msg');
+
+            errorMessage.style.display = 'block';
+            errorMessage.textContent = 'You have reached the maximum number of exams.';
+
+            setTimeout(() => {
+                errorMessage.style.display = 'none';
+            }, 3000);
+
+            return;
+        }
+
+        exams.push({
+            name: 'Enter exam name',
+            qualification: null,
+            date: null,
+            confidence: null
+        });
+
+        process();
+        showPopUp('Successfully added', 'success');
+    }
+
+    function showPopUp(msg, type) {
+        const popUp = document.querySelector('.pop-up');
+        popUp.textContent = msg;
+        popUp.className = `pop-up ${type} show`;
+        setTimeout(() => popUp.className = 'pop-up', 1500);
+    }
+
+    function nextPage() {
+        const errorMessage = document.querySelector('.error-msg');
+        const qualification = localStorage.getItem("qualification");
+
+        if (exams.length == 0) {
+            errorMessage.style.display = 'block';
+            errorMessage.textContent = 'Error: You must have at least one exam.';
+            return;
+        }
+
+        if (exams.some(ex => !ex.name || ex.name === "Enter exam name")) {
+            errorMessage.style.display = 'block';
+            errorMessage.textContent = 'Error: You cannot leave any blank.';
+            return;
+        }
+
+        if ((qualification === "A Level/ AS Level/ BTEC (Year 12)" || qualification === "A Level/ BTEC (Year 13)") && exams.some(ex => !ex.qualification)) {
+            errorMessage.style.display = 'block';
+            errorMessage.textContent = 'Error: You cannot leave any blank.';
+            return;
+        }
+
+        if (exams.some(ex => !ex.date)) {
+            errorMessage.style.display = 'block';
+            errorMessage.textContent = 'Error: You cannot leave any blank.';
+            return;
+        }
+
+        if (exams.some(ex => !ex.confidence)) {
+            errorMessage.style.display = 'block';
+            errorMessage.textContent = 'Error: You cannot leave any blank.';
+            return;
+        }
+
+        const dateCounts = {};
+
+        exams.forEach(ex => {
+            if (!ex.date) return;
+            dateCounts[ex.date] = (dateCounts[ex.date] || 0) + 1;
+        });
+
+        for (const date in dateCounts) {
+            if (dateCounts[date] > 2) {
+                const errorMessage = document.querySelector('.error-msg');
+                errorMessage.style.display = 'block';
+                errorMessage.textContent = 'Error: You cannot have more than two exams on the same day.';
+                return;
+            }
+        }
+
+        const nameCounts = {};
+
+        exams.forEach(ex => {
+            const name = ex.name.trim().toLowerCase();
+            if (!name) return;
+            nameCounts[name] = (nameCounts[name] || 0) + 1;
+        });
+
+        for (const name in nameCounts) {
+            if (nameCounts[name] > 1) {
+                const errorMessage = document.querySelector('.error-msg');
+                errorMessage.style.display = 'block';
+                errorMessage.textContent = 'Error: You cannot have two or more exams with the same name.';
+                return;
+            }
+        }
+
+        animation();
+    }
+
+    function animation() {
+        const board1 = document.querySelector('.whiteboard-frame1');
+        const board2 = document.querySelector('.whiteboard-frame2');
+        const line = document.querySelector('.line');
+        const btn = document.querySelector('.circle');
+        
+        board1.classList.remove('animating2');
+        board2.classList.remove('animating2');
+        line.classList.remove('animating2');
+        btn.classList.remove('animating2');
+        board1.classList.remove('no-animation');
+        board2.classList.remove('no-animation');
+        line.classList.remove('no-animation');
+        btn.classList.remove('no-animation');
+
+        btn.classList.add('animating1');
+
+        setTimeout(() => {
+            line.classList.add('animating1');
+            board1.classList.add('animating1');
+            board2.classList.add('animating1');
+        }, 120);
+ 
+        setTimeout(() => {
+            window.location.href = 'stage_3.html';
+        }, 700);
+    }
+
+    process();
+
+</script>
