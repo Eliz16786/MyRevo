@@ -39,7 +39,7 @@ const MAX_DIFFERENT_EXAMS_PER_DAY = 2;
 const MAX_REVISION_HOURS_PER_DAY = 6;
 const FALLBACK_TIME_OF_DAY = "It varies";
 
-// Stops one urgent/low-confidence exam from asking for so many
+// Stops one urgent/ low-confidence exam from asking for so many
 // hours that it starves every other exam out of the week.
 const MAX_WEEKLY_HOURS_PER_EXAM = 16;
 
