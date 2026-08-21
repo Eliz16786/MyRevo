@@ -46,41 +46,9 @@
         font-size: 2rem;
     }
 
-    #position2 {
-        position: absolute;
-        top: 8rem;
-        left: 2.6rem;
-        font-size: 1.9rem;
-        color: #8a64e2;
-    }
-
-    #position3 {
-        position: absolute;
-        top: 8rem;
-        left: 22.3rem;
-        font-size: 1.9rem;
-        color: #8a64e2;
-    }
-
-    #position4 {
-        position: absolute;
-        top: 8rem;
-        left: 39.8rem;
-        font-size: 1.9rem;
-        color: #8a64e2;
-    }
-
-    #position5 {
-        position: absolute;
-        top: 8rem;
-        left: 50rem;
-        font-size: 1.9rem;
-        color: #8a64e2;
-    }
-
     .table-wrap {
         position: absolute;
-        top: 11.3rem;
+        top: 9rem;
         left: 2rem;
         right: 2rem;
         bottom: 5.2rem;
@@ -98,7 +66,7 @@
  
     .exam-row {
         display: grid;
-        grid-template-columns: 1.7fr 1.5fr 0.1fr 1.2fr 0.3fr;
+        grid-template-columns: 1.7fr 1.5fr 1.2fr 1.3fr 0.3fr;
         align-items: center;
         height: 3.4rem;
         border: 0.2rem solid #d9d9d9;
@@ -108,7 +76,25 @@
         padding: 0.5rem;
         gap: 1rem;
     }
-    
+
+    .table-headers {
+        position: sticky;
+        top: 0;
+        display: grid;
+        grid-template-columns: 1.7fr 1.5fr 1.2fr 1.3fr 0.28fr;
+        gap: 1rem;
+        padding: 0.5rem;
+        background: white;
+        z-index: 10;
+        margin-bottom: -1rem;
+        font-size: 1.2rem;
+        color: #8a64e2;
+    }
+
+    .table-headers h2 {
+        margin: 0;
+    }
+        
     .exam-name {
         font-size: 1.3rem;
         font-weight: 800;
@@ -308,12 +294,14 @@
                     fill="none" stroke="#8a64e2" stroke-width="4"/>
             </svg>
 
-            <h2 class="font2" id="position2">Exam</h2>
-            <h2 class="font2" id="position3">Qualification</h2>
-            <h2 class="font2" id="position4">Date</h2>
-            <h2 class="font2" id="position5">Confidence</h2>
-            
             <section class="table-wrap">
+                <section class="table-headers">
+                    <h2 class="font2">Exam</h2>
+                    <h2 class="font2">Qualification</h2>
+                    <h2 class="font2">Date</h2>
+                    <h2 class="font2">Confidence</h2>
+                    <span></span>
+                </section>
                 <p id="examList"></p>
                 <button type="button" class="add-row-btn" id="addBtn" onclick="addExam()">
                     <span style="font-size: 2rem; vertical-align: middle; margin-right: 0.9rem">+</span>
