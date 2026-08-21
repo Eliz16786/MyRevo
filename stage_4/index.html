@@ -77,6 +77,28 @@
         font-size: 1.2rem;
     }
 
+    #position6 {
+        font-size: 1.2rem;
+        position: absolute;
+        top: 27.4rem;
+        left: 18.3rem;
+        color: #8a64e2;
+    }
+
+    #position7 {
+        font-size: 1.2rem;
+        position: absolute;
+        top: 28.8rem;
+        left: 18.3rem;
+    }
+
+    #position8 {
+        font-size: 1.2rem;
+        position: absolute;
+        top: 30.1rem;
+        left: 21rem;
+    }
+
     .clock-icon {
         position: absolute;
         top: 11.3rem;
@@ -103,9 +125,9 @@
     .info {
         position: absolute;
         left: 15.8rem;
-        bottom: 1rem;
-        width: 35rem;
-        height: 5.7rem;
+        bottom: -0.1rem;
+        width: 34.9rem;
+        height: 5rem;
         border: 0.2rem solid #e2e2e2;
         border-radius: 1rem;
         background: #FFFFFF;
@@ -114,8 +136,8 @@
     .info-icon {
         position: absolute;
         height: 2.4rem;
-        top: 0.2rem;
-        left: 0.2rem;
+        top: 28rem;
+        left: 16rem;
     }
 
     .generate-icon-white {
@@ -125,8 +147,7 @@
 
     .error-msg {
         display: none;
-        position: absolute;
-        padding: 1rem;;
+        padding: 1rem;
         bottom: -0.8rem;
         width: 12rem;
         left: 38.1em;
@@ -135,6 +156,8 @@
         font-size: 1.4rem;
         border: 0.3rem solid #FF0000;
         border-radius: 1rem;
+        margin-top: 12.7rem;
+        margin-left: 53.3rem;
     }
 
     .dropdown:focus {
@@ -160,6 +183,12 @@
             <p class="stage-dot active"></p>
         </section>
 
+        <p class="info"></p>
+        <img class= "info-icon" src="../images/info_icon.png" alt="Info Icon">
+        <h3 class="font2" id="position6">A quick note</h3>
+        <h3 class="font2" id="position7">While we'll do our best to build a timetable around your preference, it might</h3>
+        <h3 class="font2" id="position8">not always be possible to generate exactly what you requested.</h3>
+
         <h1 class="font1" id="position1">When do you work best?</h1>
         <svg style="margin-left: 20.4rem" width="384" height="230" viewBox="0 0 160 10" xmlns="http://www.w3.org/2000/svg">
             <path d="M0,5 Q29,0 40,5 Q60,10 80,5 Q100,0 120,5 Q140,10 160,5" 
@@ -181,13 +210,6 @@
         </section>
 
         <button type="button" class="rubber" onclick="previousPage()"><img class="back-icon" src="../images/back_icon.png" alt="Back Icon">Back</button>
-
-        <section class="info">
-            <img class= "info-icon" src="../images/info_icon.png" alt="Info Icon">
-            <h3 class="font2" id="position3">A quick note</h3>
-            <h3 class="font2" id="position4">While we'll do our best to build a timetable around your preference, it might</h3>
-            <h3 class="font2" id="position5">not always be possible to generate exactly what you requested.</h3>
-        </section>
 
         <h3 class="error-msg font2"></h3>
             
