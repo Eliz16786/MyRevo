@@ -2,8 +2,8 @@
 
 <title>MyRevo</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" href="icon.png">
-<link rel="stylesheet" title="Default" href="default.css">
+<link rel="icon" href="images/icon.png">
+<link rel="stylesheet" title="Default" href="css/default.css">
 
 <style>
 
@@ -288,7 +288,7 @@
 
     <p class="pop-up"></p>
 
-    <img class= "page-icon" src="page_icon.png" alt="MyRevo Icon">
+    <img class= "page-icon" src="images/page_icon.png" alt="MyRevo Icon">
 
     <div class="page-wrapper" id="pageWrapper"></div>
         <section class="whiteboard-frame2 animating2">
@@ -319,7 +319,7 @@
                     <span style="vertical-align: middle;">Add another exam</span></button>
             </section>
 
-            <button type="button" class="rubber" onclick="previousPage()"><img class="back-icon" src="back_icon.png" alt="Back Icon">Back</button>
+            <button type="button" class="rubber" onclick="previousPage()"><img class="back-icon" src="images/back_icon.png" alt="Back Icon">Back</button>
 
             <h3 class="error-msg font2"></h3>
             
@@ -328,11 +328,11 @@
 
     <p class="whiteboard-top"></p>
     <p class="line animating2"></p>
-    <button class="circle animating2" onclick="nextPage()">Next<img class="next-icon" src="next_icon.png" alt="Next Icon"></button>
+    <button class="circle animating2" onclick="nextPage()">Next<img class="next-icon" src="images/next_icon.png" alt="Next Icon"></button>
 
 </main>
 
-<script src="device-check.js"></script>
+<script src="javascripts/device-check.js"></script>
 
 <script>
     
@@ -428,13 +428,13 @@
                         process()">
                 <div class="conf-cell">
                     <button type="button" class="conf-btn good ${ex.confidence==='good'?'active':''}" onclick="setConf(${i},'good')">
-                        <img class="conf-icons" src="good_icon.png" alt="Good Icon"></button>
+                        <img class="conf-icons" src="images/good_icon.png" alt="Good Icon"></button>
                     <button type="button" class="conf-btn ok ${ex.confidence==='ok'  ?'active':''}" onclick="setConf(${i},'ok')">
-                        <img class="conf-icons" src="okay_icon.png" alt="Okay Icon"></button>
+                        <img class="conf-icons" src="images/okay_icon.png" alt="Okay Icon"></button>
                     <button type="button" class="conf-btn bad ${ex.confidence==='bad' ?'active':''}" onclick="setConf(${i},'bad')">
-                        <img class="conf-icons" src="bad_icon.png" alt="Bad Icon"></button>
+                        <img class="conf-icons" src="images/bad_icon.png" alt="Bad Icon"></button>
                 </div>
-                <button type="button" class="delete-icon" onclick="delExam(${i})"><img class="delete-icon" src="delete_icon.png" alt="Delete Icon"></button>
+                <button type="button" class="delete-icon" onclick="delExam(${i})"><img class="delete-icon" src="images/delete_icon.png" alt="Delete Icon"></button>
             `;
             list.appendChild(row);
         });

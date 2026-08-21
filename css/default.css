@@ -81,14 +81,14 @@
     
     @font-face {
         font-family: "Aloja";
-        src: url("fonts/Aloja.otf") format("opentype");
+        src: url("../fonts/Aloja.otf") format("opentype");
         font-weight: normal;
         font-style: normal;
     }
 
     @font-face {
         font-family: "Azurite";
-        src: url("fonts/Azurite.ttf") format("opentype");
+        src: url("../fonts/Azurite.ttf") format("opentype");
         font-weight: normal;
         font-style: normal;
     }

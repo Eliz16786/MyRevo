@@ -2,8 +2,8 @@
 
 <title>MyRevo</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" href="icon.png">
-<link rel="stylesheet" title="Default" href="default.css">
+<link rel="icon" href="images/icon.png">
+<link rel="stylesheet" title="Default" href="css/default.css">
 
 <style>
 
@@ -448,7 +448,7 @@
 
 <main class="whiteboard-frame1 animating2">
 
-    <img class="page-icon" src="page_icon.png" alt="MyRevo Icon">
+    <img class="page-icon" src="images/page_icon.png" alt="MyRevo Icon">
 
     <section class="whiteboard-frame2 animating2">
         <p class="stages"><strong><span style="color: #8a64e2;">Stage 3</span></strong>of 4</p>
@@ -511,7 +511,7 @@
         </section>
 
         <section class="box2 font2">
-            <img class="unavailable-icon" src="unavailable_icon.png" alt="Unavailable Icon">
+            <img class="unavailable-icon" src="images/unavailable_icon.png" alt="Unavailable Icon">
             <p id="position2">Unavailable</p>
             <p id="position3">Selected date</p>
             <p class="selected-date" id="selectedDate"></p>
@@ -543,7 +543,7 @@
                 }
                 toggleDeleteBtn();
                 ">
-            <img class="arrow-icon1" src="arrow_icon.png" alt="Arrow Icon">
+            <img class="arrow-icon1" src="images/arrow_icon.png" alt="Arrow Icon">
             <input class="time-input font2" type="time" id="timeEnd" value="00:00" onchange="
                 if (this.value === timeStart.value && !(this.value === '00:00' && timeStart.value === '00:00')) {
                     this.value = '00:00';
@@ -565,18 +565,18 @@
                 toggleDeleteBtn();
                 ">
 
-            <button type="button" class="delete-icon" onclick="delAvailability()"><img class="delete-icon" src="delete_icon.png" alt="Delete Icon"></button>
+            <button type="button" class="delete-icon" onclick="delAvailability()"><img class="delete-icon" src="images/delete_icon.png" alt="Delete Icon"></button>
         </section>
 
         <section class="box3 font2">
-                <img class="exam-icon" src="exam_icon.png" alt="Exam Icon">
+                <img class="exam-icon" src="images/exam_icon.png" alt="Exam Icon">
                 <p id="position6">Exams</p>
             <section class="table-wrap">
                 <p id="examView"></p>
             </section>
         </section>
 
-        <button type="button" class="rubber" onclick="previousPage()"><img class="back-icon" src="back_icon.png" alt="Back Icon">Back</button>
+        <button type="button" class="rubber" onclick="previousPage()"><img class="back-icon" src="images/back_icon.png" alt="Back Icon">Back</button>
 
         <h3 class="error-msg font2"></h3>
             
@@ -584,11 +584,11 @@
 
     <p class="whiteboard-top"></p>
     <p class="line animating2"></p>
-    <button type="button" class="circle animating2" onclick="nextPage()">Next<img class="next-icon" src="next_icon.png" alt="Next Icon"></button>
+    <button type="button" class="circle animating2" onclick="nextPage()">Next<img class="next-icon" src="images/next_icon.png" alt="Next Icon"></button>
 
 </main>
 
-<script src="device-check.js"></script>
+<script src="javascripts/device-check.js"></script>
 
 <script>
     
@@ -870,7 +870,7 @@
                         validateExamTimes();
                     }
                     ">
-                <img class="arrow-icon2" src="arrow_icon.png" alt="Arrow Icon">
+                <img class="arrow-icon2" src="images/arrow_icon.png" alt="Arrow Icon">
                 <input class="time-input2 font2" type="time" id="timeEnd2-${i}" value="00:00" onchange="
                     const start = document.getElementById('timeStart2-${i}');
                     if (this.value === start.value && !(this.value === '00:00' && start.value === '00:00')) {
