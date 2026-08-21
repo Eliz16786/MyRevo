@@ -2,8 +2,8 @@
 
 <title>MyRevo</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" href="images/icon.png">
-<link rel="stylesheet" title="Default" href="css/default.css">
+<link rel="icon" href="../images/icon.png">
+<link rel="stylesheet" title="Default" href="../css/default.css">
 
 <style>
 
@@ -343,7 +343,7 @@
 
 <main class="whiteboard-frame1 animating2">
 
-    <img class="page-icon" src="images/page_icon.png" alt="MyRevo Icon">
+    <img class="page-icon" src="../images/page_icon.png" alt="MyRevo Icon">
 
     <section class="whiteboard-frame2 animating2">
 
@@ -372,8 +372,8 @@
         <section class="box2 font2">
             <p id="position2">Download or export your</p>
             <p id="position3">timetable</p>
-            <button type="button" class="word font2" onclick="wordPage()"><img class="word-icon" src="images/word_icon.png" alt="Word Icon">Download Word</button>
-            <button type="button" class="pdf font2" onclick="pdfPage()"><img class="pdf-icon" src="images/pdf_icon.png" alt="PDF Icon">Download PDF</button>
+            <button type="button" class="word font2" onclick="wordPage()"><img class="word-icon" src="../images/word_icon.png" alt="Word Icon">Download Word</button>
+            <button type="button" class="pdf font2" onclick="pdfPage()"><img class="pdf-icon" src="../images/pdf_icon.png" alt="PDF Icon">Download PDF</button>
         </section>
 
         <section class="box3 font2">
@@ -404,7 +404,7 @@
 
         </section>
 
-        <button type="button" class="rubber" onclick="previousPage()"><img class="back-icon" src="images/back_icon.png" alt="Back Icon">Back</button>
+        <button type="button" class="rubber" onclick="previousPage()"><img class="back-icon" src="../images/back_icon.png" alt="Back Icon">Back</button>
             
     </section>
 
@@ -414,8 +414,8 @@
 
 </main>
 
-<script src="javascripts/algorithm.js"></script>
-<script src="javascripts/device-check.js"></script>
+<script src="../javascripts/algorithm.js"></script>
+<script src="../javascripts/device-check.js"></script>
 
 <script>
     const headerWrap = document.querySelector('.header-wrap');
@@ -450,7 +450,7 @@
 
     function previousPage() {
         sessionStorage.setItem('skipLoad3', 'true');
-        window.location.href = 'stage_4.html'
+        window.location.href = '../stage_4/index.html'
     }
 
     const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
