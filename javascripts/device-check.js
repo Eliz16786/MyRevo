@@ -96,8 +96,8 @@
                     line-height: 1.5;
                 ">
                     MyRevo works best on a laptop, computer, or tablet.
-                    On a phone, switch your browser to
-                    "Desktop site" mode to continue.
+                    <strong>On a phone, switch your browser to
+                    "Desktop site" mode to continue.</strong>
                 </p>
             `;
 
