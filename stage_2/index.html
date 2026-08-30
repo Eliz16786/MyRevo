@@ -403,7 +403,7 @@
             const row = document.createElement('div');
             row.className = 'exam-row';
             row.innerHTML = `
-                <input class="exam-name font2" type="text" value="${ex.name}" onchange="exams[${i}].name=this.value"></input>
+                <input class="exam-name font2" type="text" value="${ex.name}" oninput="exams[${i}].name=this.value"></input>
                 <div class="exam-qual font2">${qualificationChecker(i)}</div>
                 <input class="date-input font2" type="date" min="${today}" max="${nextYear}" value="${ex.date}" 
                     onchange="
