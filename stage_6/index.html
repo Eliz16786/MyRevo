@@ -598,8 +598,8 @@
 
                 if (cell && !cell.classList.contains('exam-slot')) {
                     cell.classList.add('unavailable-slot');
-                    cell.title = `Unavailable (${item.start}–${item.end})`;
-                    cell.innerHTML = `<span class="exam-name-cell">Unavailable</span>`;
+                    cell.title = `${item.reason || 'Unavailable'} (${item.start}–${item.end})`;
+                    cell.innerHTML = `<span class="exam-name-cell">${item.reason || 'Unavailable'}</span>`
                 }
             }
         });

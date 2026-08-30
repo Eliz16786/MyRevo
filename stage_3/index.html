@@ -58,7 +58,7 @@
     #position3 {
         position: absolute;
         top: 1.7rem;
-        left: 1rem;
+        left: 9.3rem;
         font-size: 1.3rem;
         font-weight: 700;
     }
@@ -74,7 +74,7 @@
     #position5 {
         position: absolute;
         top: 4rem;
-        left: 12.2rem;
+        left: 19rem;
         font-size: 1.3rem;
         font-weight: 700;
     }
@@ -86,6 +86,14 @@
         font-size: 1.5rem;
         font-weight: 700;
         color: #ff0000;
+    }
+
+    #position7 {
+        position: absolute;
+        top: 1.7rem;
+        left: 1rem;
+        font-size: 1.3rem;
+        font-weight: 700;
     }
     
     .box1 {
@@ -243,7 +251,7 @@
 
     .selected-date {
         position: absolute;
-        left: 1rem;
+        left: 9.3rem;
         top: 3.5rem;
         width: 7.9rem;
         height: 2.5rem;
@@ -257,12 +265,41 @@
         padding-left: 0.3rem;
     }
 
+    .reason {
+        position: absolute;
+        left: 1rem;
+        top: 4.6rem;
+        width: 6.8rem;
+        height: 2.4rem;
+        border: 0.2rem solid #d9d9d9;
+        border-radius: 0.6rem;
+        font-size: 1.1rem;
+        font-weight: 700;
+        display: flex;        
+        justify-content: flex-start;
+        align-items: center; 
+        padding-left: 0.3rem;
+        overflow-x: auto;
+        white-space: nowrap;
+        text-overflow: clip;
+    }
+
+    .reason:focus { 
+        outline: none; 
+        border-color: #8a64e2; 
+    }
+
+    .reason:disabled {
+        background: #FFFFFF;
+        color: #FFFFFF;
+    }
+
     .toggle-wrap { 
         position: absolute; 
         width: 2.2rem; 
         height: 1.2rem;
         top: 5.4rem;
-        left: 16rem; 
+        left: 22.9rem; 
     }
 
     .toggle-slider {
@@ -517,6 +554,8 @@
             <p class="selected-date" id="selectedDate"></p>
             <p id="position4">Time</p>
             <p id="position5">All day</p>
+            <p id="position7">Reason</p>
+            <input class="reason font2" type="text" value="" disabled onchange="reason=this.value"></input>
 
             <label class="toggle-wrap">
                 <input type="checkbox" id="allDay" onchange="allDay()">
@@ -627,6 +666,7 @@
     let viewYear = today.getFullYear();
     let selected = null;
     let availability = {};
+    let reason = "Unavailable";
 
     const exams = JSON.parse(localStorage.getItem('exams'));
     const lastExamDate = new Date(Math.max(...exams.map(ex => new Date(ex.date))));
@@ -688,7 +728,10 @@
                     if (isExam) return;
 
                     if (selected) {
-                        availability[selected] = { start: timeStart.value, end: timeEnd.value };
+                        const start = timeStart.value, end = timeEnd.value;
+                        availability[selected] = isUnavailable(start, end)
+                            ? { start, end, reason: reason }
+                            : { start, end };
                     }
                                     
                     selected = iso;
@@ -696,6 +739,9 @@
                     const saved = availability[iso] || { start: '00:00', end: '00:00' };
                     timeStart.value = saved.start;
                     timeEnd.value = saved.end;
+                    reason = saved.reason || 'Unavailable';
+                    document.querySelector('.reason').value = reason;
+                    document.querySelector('.reason').disabled = false;
 
                     const isAllDay = saved.start === '00:00' && saved.end === '23:59';
                     document.getElementById('allDay').checked = isAllDay;
@@ -770,7 +816,10 @@
         }
 
         if (selected) {
-            availability[selected] = { start: timeStart.value, end: timeEnd.value };
+            const start = timeStart.value, end = timeEnd.value;
+            availability[selected] = isUnavailable(start, end)
+                ? { start, end, reason: reason }
+                : { start, end };
         }
     }
 
@@ -778,9 +827,15 @@
         if (document.getElementById('timeStart').value != '00:00' || document.getElementById('timeEnd').value != '00:00') {
             document.getElementById('timeStart').value = '00:00';
             document.getElementById('timeEnd').value = '00:00';
+            reason = 'Unavailable';
+            document.querySelector('.reason').value = 'Unavailable';
             toggleDeleteBtn();
         }
 
+    }
+
+    function isUnavailable(start, end) {
+        return end !== '00:00' || (start === '00:00' && end === '23:59');
     }
 
     function toggleDeleteBtn() {
@@ -899,31 +954,54 @@
 
     document.getElementById('timeStart').addEventListener('change', () => {
         if (selected) {
-            availability[selected] = { start: timeStart.value, end: timeEnd.value };
+            const start = timeStart.value, end = timeEnd.value;
+            availability[selected] = isUnavailable(start, end)
+                ? { start, end, reason: reason }
+                : { start, end };
         }
+
+        if (timeStart.value === '00:00' && timeEnd.value === '23:59') {
+            document.getElementById('allDay').checked = true;
+            timeStart.disabled = true;
+            timeEnd.disabled = true;
+        }
+
         toggleDeleteBtn();
         calendar();
     });
 
     document.getElementById('timeEnd').addEventListener('change', () => {
         if (selected) {
-            availability[selected] = { start: timeStart.value, end: timeEnd.value };
+            const start = timeStart.value, end = timeEnd.value;
+            availability[selected] = isUnavailable(start, end)
+                ? { start, end, reason: reason }
+                : { start, end };
         }
+
+        if (timeStart.value === '00:00' && timeEnd.value === '23:59') {
+            document.getElementById('allDay').checked = true;
+            timeStart.disabled = true;
+            timeEnd.disabled = true;
+        }
+
         toggleDeleteBtn();
         calendar();
     });
-
+    
     function nextPage() {
         const errorMessage = document.querySelector('.error-msg');
         const timeStartl = document.getElementById('timeStart');
         const timeEndl = document.getElementById('timeEnd');
-
+        
         if (selected) {
-            availability[selected] = { start: timeStartl.value, end: timeEndl.value };
+            const start = timeStart.value, end = timeEnd.value;
+            availability[selected] = isUnavailable(start, end)
+                ? { start, end, reason: reason }
+                : { start, end };
         }
 
         for (const date in availability) {
-            const { start, end } = availability[date];
+            const { start, end, reason} = availability[date];
 
             if (start !== '00:00' && end === '00:00') {
                 errorMessage.style.display = 'block';
@@ -962,12 +1040,10 @@
         const unavailableInfo = [];
 
         for (const date in availability) {
-            const { start, end } = availability[date];
+            const { start, end, reason } = availability[date];
 
-            const isUnavailable = end !== '00:00' || (start === '00:00' && end === '23:59');
-
-            if (isUnavailable) {
-                unavailableInfo.push({ date, start, end });
+            if (isUnavailable(start, end)) {
+                unavailableInfo.push({ date, start, end, reason });
             }
         }
 
