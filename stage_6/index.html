@@ -7,6 +7,20 @@
 
 <style>
 
+    .circle {
+        cursor: pointer;
+        transition: 0.2s ease;
+        width: 32rem;
+    }
+
+    .circle:hover {
+        background: #6b3dcc;
+    }
+
+    .circle.animating2 {
+        gap: 1.1rem;
+    }
+
     .rubber {
         position: absolute;
         bottom: -0.2rem;
@@ -23,6 +37,11 @@
     .back-icon {
         width: 4rem;
         height: 5rem;
+    }
+
+    .restart-icon {
+        width: 2rem;
+        height: 2rem;
     }
 
     #position1 {
@@ -410,7 +429,7 @@
 
     <p class="whiteboard-top"></p>
     <p class="line animating2"></p>
-    <p class="circle animating2"></p>
+    <button type="button" class="circle animating2" onclick="nextPage()"><img class="restart-icon" src="../images/restart_icon.png" alt="Restart Icon">Restart timetable</button>
 
 </main>
 
@@ -764,6 +783,12 @@ function printAsPdf(weekSectionsHtml) {
         printWindow.focus();
         printWindow.print();
     };
+}
+
+function nextPage() {
+    setTimeout(() => {
+        window.location.href = '/';
+    }, 100);
 }
 
 timetable();
