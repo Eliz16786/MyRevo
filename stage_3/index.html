@@ -7,6 +7,16 @@
 
 <style>
 
+    body {
+        -webkit-user-select: none;
+        user-select: none;
+    }
+
+    input, textarea {
+        -webkit-user-select: text;
+        user-select: text;
+    }
+
     @media (max-width: 1024px) {
         .squiggle {
             top: -1rem;
@@ -106,6 +116,42 @@
         font-size: 1.3rem;
         font-weight: 700;
     }
+
+    #position8 {
+        font-size: 1.2rem;
+        position: absolute;
+        top: 2.5rem;
+        left: 4rem;
+        font-weight: 700;
+        color: #8a64e2;
+    }
+
+    #position9 {
+        font-size: 0.9rem;
+        position: absolute;
+        top: 4.3rem;
+        left: 4rem;
+        font-weight: 700;
+        color: #000000;
+    }
+
+    #position10 {
+        font-size: 0.9rem;
+        position: absolute;
+        top: 5.3rem;
+        left: 4rem;
+        font-weight: 700;
+        color: #000000;
+    }
+
+    #position11 {
+        font-size: 0.9rem;
+        position: absolute;
+        top: 6.3rem;
+        left: 4rem;
+        font-weight: 700;
+        color: #000000;
+    }
     
     .box1 {
         position: absolute;
@@ -179,6 +225,7 @@
         font-weight: 700;
         background: #d1fae5;
         transition: 0.15s;
+        touch-action: manipulation;
     }
 
     .cal-day:hover {
@@ -257,7 +304,7 @@
         width: 2rem;
         height: 2rem;
         left: 0.5rem;
-        top: 0.5rem;
+        top: 0.4rem;
     }
 
     .selected-date {
@@ -481,14 +528,32 @@
         display: none;
         position: absolute;
         padding: 1rem;
-        top: 2.1rem;
-        width: 17rem;
-        left: 1.5rem;
+        top: 1.8rem;
+        width: 19rem;
+        left: 1.4rem;
         color: #FF0000;
         background: #FFFFFF;
-        font-size: 1.2rem;
+        font-size: 1.3rem;
         border: 0.3rem solid #FF0000;
         border-radius: 1rem;
+    }
+
+    .info {
+        position: absolute;
+        left: 1.4rem;
+        top: 2.1rem;
+        width: 19.6rem;
+        height: 5rem;
+        border: 0.2rem solid #e2e2e2;
+        border-radius: 1rem;
+        background: #FFFFFF;
+    }
+
+    .info-icon {
+        position: absolute;
+        height: 2.4rem;
+        top: 3.1rem;
+        left: 1.6rem;
     }
 
 </style>
@@ -627,6 +692,13 @@
 
         <button type="button" class="rubber" onclick="previousPage()"><img class="back-icon" src="../images/back_icon.png" alt="Back Icon">Back</button>
 
+        <p class="info font2"></p>
+        <img class="info-icon" src="../images/info_icon.png" alt="Info Icon">
+        <h3 class="font2" id="position8">Selecting multiple unavailable dates</h3>
+        <h3 class="font2" id="position9">On desktop: Hold Ctrl (or Cmd on Mac) and click to select 
+        <h3 class="font2" id="position10">multiple dates.</h3>
+        <h3 class="font2" id="position11">On mobile: Tap and hold each date to select.</h3>
+
         <h3 class="error-msg font2"></h3>
             
     </section>
@@ -674,13 +746,89 @@
  
     let viewMonth = today.getMonth();
     let viewYear = today.getFullYear();
-    let selected = null;
+
+    let selectedDates = new Set();
+    let multiSelectMode = false;
+
     let availability = {};
     let reason = "Unavailable";
 
     const exams = JSON.parse(localStorage.getItem('exams'));
     const lastExamDate = new Date(Math.max(...exams.map(ex => new Date(ex.date))));
     const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+    function saveCurrentSelection() {
+        if (selectedDates.size === 0) return;
+        const start = timeStart.value, end = timeEnd.value;
+        selectedDates.forEach(iso => {
+            availability[iso] = isUnavailable(start, end)
+                ? { start, end, reason: reason }
+                : { start, end };
+        });
+    }
+
+    function loadSelectionIntoForm() {
+        const dateBox = document.querySelector('.selected-date');
+        const reasonInput = document.querySelector('.reason');
+
+        if (selectedDates.size === 0) {
+            dateBox.textContent = '';
+            reasonInput.value = '';
+            reasonInput.disabled = true;
+            timeStart.value = '00:00';
+            timeEnd.value = '00:00';
+            document.getElementById('allDay').checked = false;
+            timeStart.disabled = false;
+            timeEnd.disabled = false;
+            toggleDeleteBtn();
+            return;
+        }
+
+        const sortedDates = Array.from(selectedDates).sort();
+        const refIso = sortedDates[0];
+        const saved = availability[refIso] || { start: '00:00', end: '00:00' };
+
+        timeStart.value = saved.start;
+        timeEnd.value = saved.end;
+        reason = saved.reason || 'Unavailable';
+        reasonInput.value = reason;
+        reasonInput.disabled = false;
+
+        const isAllDay = saved.start === '00:00' && saved.end === '23:59';
+        document.getElementById('allDay').checked = isAllDay;
+        timeStart.disabled = isAllDay;
+        timeEnd.disabled = isAllDay;
+
+        toggleDeleteBtn();
+
+        if (sortedDates.length === 1) {
+            const [y, m, d] = refIso.split('-');
+            dateBox.textContent = `${parseInt(d)} ${monthNames[parseInt(m) - 1]} ${y}`;
+        } else {
+            dateBox.textContent = `${sortedDates.length} dates selected`;
+        }
+    }
+
+    function handleDateClick(iso, isMultiSelect) {
+        saveCurrentSelection();
+
+        if (isMultiSelect) {
+            if (selectedDates.has(iso)) {
+                selectedDates.delete(iso);
+            } else {
+                selectedDates.add(iso);
+            }
+            if (selectedDates.size === 0) {
+                multiSelectMode = false;
+            }
+        } else {
+            selectedDates = new Set([iso]);
+            multiSelectMode = false;
+        }
+
+        loadSelectionIntoForm();
+        calendar();
+    }
  
     function calendar() {
         const timeStart = document.getElementById('timeStart');
@@ -716,13 +864,13 @@
             } else {
                 box.classList.remove('selected', 'unavailable');
 
-                if (selected === iso && !isExam) {
+                if (selectedDates.has(iso) && !isExam) {
                     box.classList.add('selected');
                 }
 
                 let recordDate = {};
                 
-                if (selected === iso) {
+                if ((selectedDates.has(iso))) {
                     recordDate = { start: timeStart.value, end: timeEnd.value };
                 } else {
                     recordDate = availability[iso];
@@ -734,38 +882,39 @@
                     }
                 }
  
-                box.onclick = function() {
+                box.onclick = function(event) {
                     if (isExam) return;
-
-                    if (selected) {
-                        const start = timeStart.value, end = timeEnd.value;
-                        availability[selected] = isUnavailable(start, end)
-                            ? { start, end, reason: reason }
-                            : { start, end };
-                    }
-                                    
-                    selected = iso;
-
-                    const saved = availability[iso] || { start: '00:00', end: '00:00' };
-                    timeStart.value = saved.start;
-                    timeEnd.value = saved.end;
-                    reason = saved.reason || 'Unavailable';
-                    document.querySelector('.reason').value = reason;
-                    document.querySelector('.reason').disabled = false;
-
-                    const isAllDay = saved.start === '00:00' && saved.end === '23:59';
-                    document.getElementById('allDay').checked = isAllDay;
-                    timeStart.disabled = isAllDay;
-                    timeEnd.disabled = isAllDay;
-
-                    toggleDeleteBtn();
-                    const selectedDate = document.querySelector('.selected-date');
-                    const day = date.getDate();
-                    const month = date.getMonth() + 1;
-                    const year = date.getFullYear();
-                    selectedDate.textContent = `${day} ${monthNames[month - 1]} ${year}`;
-                    calendar();
+                    const isMultiSelect = (event.ctrlKey || event.metaKey);
+                    handleDateClick(iso, isMultiSelect);
                 };
+
+                let longPressTimer = null;
+                let longPressFired = false;
+
+                box.addEventListener('touchstart', function() {
+                    if (isExam) return;
+                    longPressFired = false;
+                    longPressTimer = setTimeout(() => {
+                        longPressFired = true;
+                        multiSelectMode = true;
+                        handleDateClick(iso, true);
+                    }, 500);
+                });
+
+                box.addEventListener('touchmove', function() {
+                    clearTimeout(longPressTimer);
+                });
+
+                box.addEventListener('touchend', function(event) {
+                    clearTimeout(longPressTimer);
+                    if (longPressFired) {
+                        event.preventDefault();
+                    }
+                });
+
+                box.addEventListener('contextmenu', function(e) {
+                    e.preventDefault();
+                });
             }
 
             if (date > maxAllowedDate) {
@@ -825,12 +974,7 @@
             document.getElementById('timeEnd').value  = '00:00';
         }
 
-        if (selected) {
-            const start = timeStart.value, end = timeEnd.value;
-            availability[selected] = isUnavailable(start, end)
-                ? { start, end, reason: reason }
-                : { start, end };
-        }
+        saveCurrentSelection();
     }
 
     function delAvailability() {
@@ -963,12 +1107,8 @@
     }
 
     document.getElementById('timeStart').addEventListener('change', () => {
-        if (selected) {
-            const start = timeStart.value, end = timeEnd.value;
-            availability[selected] = isUnavailable(start, end)
-                ? { start, end, reason: reason }
-                : { start, end };
-        }
+        
+        saveCurrentSelection();
 
         if (timeStart.value === '00:00' && timeEnd.value === '23:59') {
             document.getElementById('allDay').checked = true;
@@ -1002,13 +1142,8 @@
         const errorMessage = document.querySelector('.error-msg');
         const timeStartl = document.getElementById('timeStart');
         const timeEndl = document.getElementById('timeEnd');
-        
-        if (selected) {
-            const start = timeStart.value, end = timeEnd.value;
-            availability[selected] = isUnavailable(start, end)
-                ? { start, end, reason: reason }
-                : { start, end };
-        }
+
+        saveCurrentSelection();
 
         for (const date in availability) {
             const { start, end, reason} = availability[date];
