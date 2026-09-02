@@ -82,6 +82,11 @@
 
 
             overlay.innerHTML = `
+                <!DOCTYPE html>
+                <html lang="en-GB"></html>
+                
+                <title>MyRevo | Device Check</title>
+                
                 <h1 style="
                     font-size: 1.5rem;
                     margin-bottom: 1rem;
