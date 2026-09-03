@@ -60,6 +60,8 @@
         `;
 
         overlay.innerHTML = `
+            <title>MyRevo – Device Check</title>
+            <meta name="description" content="MyRevo is checking what type of device your using.">
             <h2 style="font-size: 1.5rem; margin-bottom: 1rem; color: #8a64e2;">
                 Please use a bigger screen.
             </h2>
