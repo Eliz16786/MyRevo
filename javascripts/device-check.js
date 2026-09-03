@@ -60,9 +60,9 @@
         `;
 
         overlay.innerHTML = `
-            <h1 style="font-size: 1.5rem; margin-bottom: 1rem; color: #8a64e2;">
+            <h2 style="font-size: 1.5rem; margin-bottom: 1rem; color: #8a64e2;">
                 Please use a bigger screen.
-            </h1>
+            </h2>
             <p style="font-size: 1rem; max-width: 28rem; line-height: 1.5;">
                 MyRevo works best on a laptop, computer, or tablet.
                 <strong>On a phone, switch your browser to
