@@ -254,15 +254,13 @@
     .error-msg {
         display: none;
         padding: 1rem;
-        bottom: -0.8rem;
         width: 30rem;
-        left: 11em;
         color: #FF0000;
         background: #FFFFFF;
         font-size: 1.4rem;
         border: 0.3rem solid #FF0000;
         border-radius: 1rem;
-        margin-top: 15.1rem;
+        margin-top: 15rem;
         margin-left: 16rem;
     }
 
@@ -418,10 +416,53 @@
         const [y, m, d] = iso.split('-');
         return `${d}/${m}/${String(y).slice(2)}`;
     }
- 
-    function process() {
+
+    function getDateBounds() {
         const today = new Date().toISOString().split('T')[0];
         const nextYear = new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split('T')[0];
+        return { today, nextYear };
+    }
+
+    function handleDateChange(input, i) {
+        const errorMessage = document.querySelector('.error-msg');
+
+        if (!input.value) {
+            return;
+        }
+
+        const [yearStr, monthStr] = input.value.split('-');
+        const year = Number(yearStr);
+        const month = Number(monthStr);
+
+        if (year < 1000) {
+            return;
+        }
+
+        const currentYear = new Date().getFullYear();
+        if (year !== currentYear && year !== currentYear + 1) {
+            exams[i].date = null;
+            input.value = '';
+            errorMessage.style.display = 'block';
+            errorMessage.textContent = 'Error: The year must be this year or next year.';
+            return;
+        }
+        
+        const { today, nextYear } = getDateBounds();
+
+        if (input.value < today || input.value > nextYear) {
+            exams[i].date = null;
+            input.value = '';
+            errorMessage.style.display = 'block';
+            errorMessage.textContent = 'Error: Date must be between today and next year.';
+            return;
+        }
+
+        errorMessage.style.display = 'none';
+        exams[i].date = input.value;
+        process();
+    }
+ 
+    function process() {
         const list = document.getElementById('examList');
         list.innerHTML = '';
  
@@ -431,17 +472,8 @@
             row.innerHTML = `
                 <input class="exam-name font2" type="text" value="${ex.name}" oninput="exams[${i}].name=this.value"></input>
                 <div class="exam-qual font2">${qualificationChecker(i)}</div>
-                <input class="date-input font2" type="date" min="${today}" max="${nextYear}" value="${ex.date}" 
-                    onchange="
-                        if (this.value < '${today}' || this.value > '${nextYear}') {
-                            this.value = '';
-                            document.querySelector('.error-msg').style.display = 'block';
-                            document.querySelector('.error-msg').textContent = 'Error: Date must be between today and next year.';
-                            return;
-                        }
-                        document.querySelector('.error-msg').style.display = 'none';
-                        exams[${i}].date=this.value;
-                        process()">
+                <input class="date-input font2" type="date" value="${ex.date}" 
+                    oninput="handleDateChange(this, ${i})">
                 <div class="conf-cell">
                     <button type="button" class="conf-btn good ${ex.confidence==='good'?'active':''}" onclick="setConf(${i},'good')">
                         <img class="conf-icons" src="../images/good_icon.png" alt="Good Icon"></button>
