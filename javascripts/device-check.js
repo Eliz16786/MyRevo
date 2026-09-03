@@ -60,7 +60,7 @@
         `;
 
         overlay.innerHTML = `
-            <title>MyRevo – Device Check</title>
+            <title>MyRevo - Device Check</title>
             <h2 style="font-size: 1.5rem; margin-bottom: 1rem; color: #8a64e2;">
                 Please use a bigger screen.
             </h2>
