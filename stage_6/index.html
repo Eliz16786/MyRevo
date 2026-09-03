@@ -17,12 +17,6 @@
         user-select: none;
     }
 
-    @media (max-width: 1024px) {
-        .squiggle {
-            top: -1rem;
-        }
-    }
-
     .circle {
         cursor: pointer;
         transition: 0.2s ease;
@@ -377,6 +371,14 @@
         font-size: 1rem;
         font-weight: 700;
         margin-left: auto;
+    }
+
+    html.is-mobile-device #position1 {
+        top: 3.5rem;
+    }
+
+    html.is-mobile-device .squiggle {
+        top: 0.1rem;
     }
 
 </style>

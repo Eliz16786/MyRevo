@@ -17,12 +17,6 @@
         user-select: none;
     }
 
-    @media (max-width: 1024px) {
-        .squiggle {
-            top: -1rem;
-        }
-    }
-
     .line {
         height: 8.5rem;
     }
@@ -151,7 +145,7 @@
         position: absolute;
         left: 15.8rem;
         top: 26.8rem;
-        width: 34.9rem;
+        width: 33.3rem;
         height: 5rem;
         border: 0.2rem solid #e2e2e2;
         border-radius: 1rem;
@@ -188,6 +182,14 @@
         outline: none;
         border-color: #8a64e2;
         box-shadow: 0 0 0 0.2rem #8a64e266; 
+    }
+
+    html.is-mobile-device #position1 {
+        top: 3.5rem;
+    }
+
+    html.is-mobile-device .squiggle {
+        top: 0.1rem;
     }
 
 </style>

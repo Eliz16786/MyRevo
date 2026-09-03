@@ -1,14 +1,21 @@
 (function () {
 
     const isMobilePhone = /Mobi|Android/i.test(navigator.userAgent);
-    const isDesktopMode = window.innerWidth >= 1000;
+    
+    const isMobileDesktopMode = navigator.maxTouchPoints > 0 && screen.width < 600 && window.innerWidth >= 1000;
 
-    if (!isMobilePhone || isDesktopMode) {
+    if (isMobilePhone && !isMobileDesktopMode) {
+        blockMobile();
+        return;
+    }
+
+    if (isMobileDesktopMode) {
+        document.documentElement.classList.add('is-mobile-device');
         enableDesktopLayout();
         return;
     }
 
-    blockMobile();
+    enableDesktopLayout();
 
     function enableDesktopLayout() {
         let viewport = document.querySelector('meta[name="viewport"]');

@@ -17,12 +17,6 @@
         user-select: none;
     }
 
-    @media (max-width: 1024px) {
-        .squiggle {
-            top: -1rem;
-        }
-    }
-
     .circle {
         cursor: pointer;
         transition: 0.2s ease;
@@ -288,6 +282,14 @@
     .dropdown:focus {
         outline: none; 
         box-shadow: 0 0 0 0.2rem #8a64e2;
+    }
+
+    html.is-mobile-device #position1 {
+        top: 3.5rem;
+    }
+
+    html.is-mobile-device .squiggle {
+        top: 0.1rem;
     }
 
 </style>

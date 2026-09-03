@@ -53,15 +53,10 @@
         color: #8a64e2;
     }
 
-    .squiggle-wrap {
-        position: relative;
-        margin-left: 7rem;
-    }
-
     .squiggle {
         position: absolute;
-        top: 0;
-        left: 0;
+        top: 1.3rem;
+        left: 7rem;
     }
 
     #position3 {
@@ -201,7 +196,7 @@
         position: absolute;
         left: 15.8rem;
         bottom: -0.1rem;
-        width: 31.7rem;
+        width: 30rem;
         height: 5rem;
         border: 0.2rem solid #e2e2e2;
         border-radius: 1rem;
@@ -235,22 +230,12 @@
         border-radius: 1rem;
     }
 
-    @media (max-width: 1024px) {
-        .squiggle-wrap {
-            top: 0rem;
-        }
+    html.is-mobile-device #position1 {
+        top: 4.2rem;
     }
 
-    @media (max-width: 1024px) {
-        #position1 {
-            top: 4.1rem;
-        }
-    }
-
-    @media (max-width: 1024px) {
-        #position2 {
-            top: 6.6rem;
-        }
+    html.is-mobile-device #position2 {
+        top: 6.7rem;
     }
 
 </style>
@@ -284,12 +269,10 @@
             <span id="position2">revision plan</span>
         </h1>
 
-        <div class="squiggle-wrap">
-            <svg class="squiggle" width="215" height="240" viewBox="0 0 160 10" xmlns="http://www.w3.org/2000/svg">
-                <path d="M0,5 Q20,0 40,5 Q60,10 80,5 Q100,0 120,5 Q140,10 160,5" 
-                    fill="none" stroke="#8a64e2" stroke-width="4"/>
-            </svg>
-        </div>
+        <svg class="squiggle" width="215" height="240" viewBox="0 0 160 10" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,5 Q20,0 40,5 Q60,10 80,5 Q100,0 120,5 Q140,10 160,5" 
+                fill="none" stroke="#8a64e2" stroke-width="4"/>
+        </svg>
         
         <img class= "lines" src="images/purple_lines.png" alt="Purple Lines">
         <h2 class="font2" id="position3">Answer a few simple questions and we'll create a</h2>
