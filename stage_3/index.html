@@ -647,7 +647,7 @@
                 <span class="toggle-slider"></span>
             </label>
 
-            <input class="time-input font2" type="time" id="timeStart" value="00:00" onchange="
+            <input class="time-input font2" type="time" id="timeStart" value="00:00" onblur="
                 if (this.value === timeEnd.value && !(this.value === '00:00' && timeEnd.value === '00:00')) {
                     this.value = '00:00';
                     timeEnd.value = '00:00';
@@ -668,7 +668,7 @@
                 toggleDeleteBtn();
                 ">
             <img class="arrow-icon1" src="../images/arrow_icon.png" alt="Arrow Icon">
-            <input class="time-input font2" type="time" id="timeEnd" value="00:00" onchange="
+            <input class="time-input font2" type="time" id="timeEnd" value="00:00" onblur="
                 if (this.value === timeStart.value && !(this.value === '00:00' && timeStart.value === '00:00')) {
                     this.value = '00:00';
                     timeStart.value = '00:00';
@@ -1068,7 +1068,7 @@
             row.innerHTML = `
                 <p class="exam-name font2">${ex.name}</p>
                 <p class="exam-date font2">${fmtDate(ex.date)}</p>
-                <input class="time-input2 font2" type="time" id="timeStart2-${i}" value="00:00" onchange="
+                <input class="time-input2 font2" type="time" id="timeStart2-${i}" value="00:00" onblur="
                     const end = document.getElementById('timeEnd2-${i}');
                     if (this.value === end.value && !(this.value === '00:00' && end.value === '00:00')) {
                         this.value = '00:00';
@@ -1090,7 +1090,7 @@
                     }
                     ">
                 <img class="arrow-icon2" src="../images/arrow_icon.png" alt="Arrow Icon">
-                <input class="time-input2 font2" type="time" id="timeEnd2-${i}" value="00:00" onchange="
+                <input class="time-input2 font2" type="time" id="timeEnd2-${i}" value="00:00" onblur="
                     const start = document.getElementById('timeStart2-${i}');
                     if (this.value === start.value && !(this.value === '00:00' && start.value === '00:00')) {
                         this.value = '00:00';
@@ -1131,12 +1131,7 @@
     });
 
     document.getElementById('timeEnd').addEventListener('change', () => {
-        if (selected) {
-            const start = timeStart.value, end = timeEnd.value;
-            availability[selected] = isUnavailable(start, end)
-                ? { start, end, reason: reason }
-                : { start, end };
-        }
+        saveCurrentSelection();
 
         if (timeStart.value === '00:00' && timeEnd.value === '23:59') {
             document.getElementById('allDay').checked = true;
