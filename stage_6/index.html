@@ -461,6 +461,7 @@
 
 <script src="../javascripts/algorithm.js"></script>
 <script src="../javascripts/device-check.js"></script>
+<script src="https://unpkg.com/docx@9.5.1/dist/index.iife.js"></script>
 
 <script>
     const headerWrap = document.querySelector('.header-wrap');
@@ -683,8 +684,13 @@ function getAllWeeksTableHtml() {
     return weekSectionsHtml.join('');
 }
 
-function wordPage() {
-    downloadWordDocument(getAllWeeksTableHtml());
+async function wordPage() {
+    try {
+        await downloadWordDocument();
+    } catch (error) {
+        console.error("Word download error:", error);
+        alert("There was a problem creating the Word document.");
+    }
 }
 
 function pdfPage() {
@@ -732,46 +738,446 @@ function buildWeekTableHtml() {
     `;
 }
 
-// Wraps every week's table in a Word-compatible HTML document
-function downloadWordDocument(weekSectionsHtml) {
-    const htmlDoc = `
-        <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
-        <head>
-            <meta charset="utf-8">
-            <title>MyRevo Timetable</title>
-            <!--[if gte mso 9]>
-            <xml>
-                <w:WordDocument>
-                    <w:View>Print</w:View>
-                    <w:Zoom>90</w:Zoom>
-                </w:WordDocument>
-            </xml>
-            <![endif]-->
-            <style>
-                @page {
-                    size: 841.9pt 595.3pt;
-                    mso-page-orientation: landscape;
-                    margin: 1cm;
+// Creates a genuine .docx Word document containing every week
+// in the timetable, with colours and landscape orientation.
+async function downloadWordDocument() {
+
+    if (typeof docx === "undefined") {
+        alert("The Word document library could not be loaded.");
+        console.error("docx library is not loaded.");
+        return;
+    }
+
+    const {
+        Document,
+        Packer,
+        Paragraph,
+        TextRun,
+        Table,
+        TableRow,
+        TableCell,
+        WidthType,
+        AlignmentType,
+        HeadingLevel,
+        PageOrientation,
+        ShadingType,
+        VerticalAlign,
+        HeightRule,
+        TableLayoutType
+    } = docx;
+
+    const originalWeekStart = new Date(weekStart);
+
+    const lastWeek = getLastExamWeekStart();
+
+    const finalWeek =
+        (lastWeek instanceof Date && !isNaN(lastWeek))
+            ? lastWeek
+            : currentWeekStart;
+
+    let exportWeekStart = new Date(currentWeekStart);
+
+    const sections = [];
+
+    while (exportWeekStart <= finalWeek) {
+
+        weekStart = new Date(exportWeekStart);
+
+        timetable();
+
+        // -----------------------------------------
+        // WEEK TITLE
+        // -----------------------------------------
+
+        const weekLabel =
+            window.document.querySelector("#weekLabel").textContent;
+
+        const weekTitle = new Paragraph({
+            alignment: AlignmentType.LEFT,
+
+            spacing: {
+                before: 0,
+                after: 250
+            },
+
+            children: [
+                new TextRun({
+                    text: weekLabel,
+                    bold: true,
+                    size: 34,
+                    font: "Arial"
+                })
+            ]
+        });
+
+
+        // -----------------------------------------
+        // TABLE HEADER
+        // -----------------------------------------
+
+        const headerCells = [];
+
+        window.document
+            .querySelectorAll("#dayHeaders > div")
+            .forEach((div, index) => {
+
+                headerCells.push(
+                    new TableCell({
+
+                        width: {
+                            size: index === 0 ? 8 : 13.142,
+                            type: WidthType.PERCENTAGE
+                        },
+
+                        shading: {
+                            type: ShadingType.CLEAR,
+                            fill: "F0E6FF"
+                        },
+
+                        verticalAlign: VerticalAlign.CENTER,
+
+                        margins: {
+                            top: 80,
+                            bottom: 80,
+                            left: 60,
+                            right: 60
+                        },
+
+                        children: [
+                            new Paragraph({
+
+                                alignment: AlignmentType.CENTER,
+
+                                spacing: {
+                                    before: 0,
+                                    after: 0
+                                },
+
+                                children: [
+                                    new TextRun({
+                                        text: div.textContent.trim(),
+                                        bold: true,
+                                        size: 20,
+                                        font: "Arial"
+                                    })
+                                ]
+                            })
+                        ]
+                    })
+                );
+            });
+
+
+        const tableRows = [];
+
+        // Header row
+        tableRows.push(
+            new TableRow({
+
+                height: {
+                    value: 650,
+                    rule: HeightRule.EXACT
+                },
+
+                children: headerCells
+            })
+        );
+
+
+        // -----------------------------------------
+        // TIMETABLE ROWS
+        // -----------------------------------------
+
+        window.document
+            .querySelectorAll("#timeGrid .time-row")
+            .forEach(row => {
+
+                const cells = [];
+
+                row.querySelectorAll(".time-label, .cal-day")
+                    .forEach(cell => {
+
+                        const isTimeLabel =
+                            cell.classList.contains("time-label");
+
+
+                        // -----------------------------
+                        // CELL COLOUR
+                        // -----------------------------
+
+                        let background = "FFFFFF";
+
+                        if (cell.classList.contains("exam-slot")) {
+
+                            background = "F9A8A8";
+
+                        } else if (
+                            cell.classList.contains("unavailable-slot")
+                        ) {
+
+                            background = "D4C9F9";
+
+                        } else if (
+                            cell.classList.contains("revision-slot")
+                        ) {
+
+                            background = "FDE4B0";
+                        }
+
+
+                        // -----------------------------
+                        // CELL TEXT
+                        // -----------------------------
+
+                        const nameSpan =
+                            cell.querySelector(".exam-name-cell");
+
+                        const text =
+                            nameSpan
+                                ? nameSpan.textContent.trim()
+                                : cell.textContent.trim();
+
+
+                        // -----------------------------
+                        // WORD CELL
+                        // -----------------------------
+
+                        cells.push(
+                            new TableCell({
+
+                                width: {
+                                    size: isTimeLabel
+                                        ? 8
+                                        : 13.142,
+                                    type: WidthType.PERCENTAGE
+                                },
+
+                                shading: {
+                                    type: ShadingType.CLEAR,
+                                    fill: background
+                                },
+
+                                verticalAlign: VerticalAlign.CENTER,
+
+                                margins: {
+                                    top: 50,
+                                    bottom: 50,
+                                    left: 40,
+                                    right: 40
+                                },
+
+                                children: [
+                                    new Paragraph({
+
+                                        alignment:
+                                            isTimeLabel
+                                                ? AlignmentType.RIGHT
+                                                : AlignmentType.CENTER,
+
+                                        spacing: {
+                                            before: 0,
+                                            after: 0,
+                                            line: 240
+                                        },
+
+                                        children: [
+                                            new TextRun({
+
+                                                text: text,
+
+                                                bold: isTimeLabel,
+
+                                                size: isTimeLabel
+                                                    ? 18
+                                                    : 17,
+
+                                                font: "Arial"
+                                            })
+                                        ]
+                                    })
+                                ]
+                            })
+                        );
+                    });
+
+
+                // Add row
+                tableRows.push(
+                    new TableRow({
+
+                        height: {
+                            value: 500,
+                            rule: HeightRule.EXACT
+                        },
+
+                        children: cells
+                    })
+                );
+            });
+
+
+        // -----------------------------------------
+        // WORD TABLE
+        // -----------------------------------------
+
+        const weekTable = new Table({
+
+            width: {
+                size: 100,
+                type: WidthType.PERCENTAGE
+            },
+
+            layout: TableLayoutType.FIXED,
+
+            borders: {
+
+                top: {
+                    style: "single",
+                    size: 6,
+                    color: "999999"
+                },
+
+                bottom: {
+                    style: "single",
+                    size: 6,
+                    color: "999999"
+                },
+
+                left: {
+                    style: "single",
+                    size: 6,
+                    color: "999999"
+                },
+
+                right: {
+                    style: "single",
+                    size: 6,
+                    color: "999999"
+                },
+
+                insideHorizontal: {
+                    style: "single",
+                    size: 6,
+                    color: "999999"
+                },
+
+                insideVertical: {
+                    style: "single",
+                    size: 6,
+                    color: "999999"
                 }
-                body { font-family: Calibri, sans-serif; }
-            </style>
-        </head>
-        <body>
-            ${weekSectionsHtml}
-        </body>
-        </html>
-    `;
+            },
 
-    const blob = new Blob(['\ufeff', htmlDoc], { type: 'application/msword' });
-    const url = URL.createObjectURL(blob);
+            rows: tableRows
+        });
 
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'MyRevo_Timetable.doc';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+
+        // -----------------------------------------
+        // PAGE / SECTION
+        // -----------------------------------------
+
+        sections.push({
+
+            properties: {
+
+                page: {
+
+                    size: {
+
+                        // A4 LANDSCAPE
+                        width: 16838,
+                        height: 11906,
+
+                        orientation:
+                            PageOrientation.LANDSCAPE
+                    },
+
+                    margin: {
+
+                        top: 450,
+                        bottom: 450,
+                        left: 450,
+                        right: 450
+                    }
+                }
+            },
+
+            children: [
+
+                weekTitle,
+
+                weekTable
+            ]
+        });
+
+
+        exportWeekStart.setDate(
+            exportWeekStart.getDate() + 7
+        );
+    }
+
+
+    // Restore timetable currently being viewed
+    weekStart = originalWeekStart;
+    timetable();
+
+
+    // -----------------------------------------
+    // CREATE DOCX
+    // -----------------------------------------
+
+    const finalDocument = new Document({
+        sections: sections
+    });
+
+
+    try {
+
+        const blob =
+            await Packer.toBlob(finalDocument);
+
+
+        // -----------------------------------------
+        // DOWNLOAD
+        // -----------------------------------------
+
+        const url =
+            URL.createObjectURL(blob);
+
+        const link =
+            window.document.createElement("a");
+
+        link.href = url;
+
+        link.download =
+            "MyRevo_Timetable.docx";
+
+        window.document.body.appendChild(link);
+
+        link.click();
+
+        window.document.body.removeChild(link);
+
+
+        setTimeout(() => {
+
+            URL.revokeObjectURL(url);
+
+        }, 1000);
+
+
+    } catch (error) {
+
+        console.error(
+            "Word document download failed:",
+            error
+        );
+
+        alert(
+            "Sorry, the Word document could not be created. " +
+            "Please check the browser console for more information."
+        );
+    }
 }
 
 // Opens a new window with the same week tables, styled for print, then triggers the browser's print dialog
